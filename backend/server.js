@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./dbConnection/database");
 const cors = require("cors");
 const app = express();
+const routes = require("./routes/index");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -10,7 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 // Define routes
-app.use("/api/auth", require("./routes/authRoutes")); // Mount authRoutes
+// app.use("/api/auth", require("./routes/authRoutes")); // Mount authRoutes
+app.use(routes);
+
 
 app.get("/", (req, res) => {
   res.send("Hello, GatherGro!");
