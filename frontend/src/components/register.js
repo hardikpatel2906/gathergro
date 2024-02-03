@@ -10,7 +10,6 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
-
 function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -19,6 +18,7 @@ function Register() {
   const [contact, setContact] = useState("");
   const [bio, setBio] = useState("");
   const [address, setAddress] = useState("");
+  const [error, setError] = useState(""); // State for error message
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -45,12 +45,14 @@ function Register() {
       // Handle response, store token, redirect user, etc.
     } catch (error) {
       console.error("Registration error", error.response.data);
-      // Handle error
+      setError(
+        error.response.data.error || "An error occurred. Please try again."
+      );
     }
   };
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="sm">
       <Typography variant="h4" align="center" gutterBottom>
         Register
       </Typography>
@@ -118,6 +120,11 @@ function Register() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
+        )}
+        {error && (
+          <Typography variant="body2" color="error" align="center">
+            {error}
+          </Typography>
         )}
         <Button
           type="submit"

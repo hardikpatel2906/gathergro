@@ -6,20 +6,22 @@ import { TextField, Button, Container, Box, Typography } from "@mui/material";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // State variable for error message
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await authService.login(email, password);
-      
+
       if (response.data.success) {
-        navigate("/home");
+        navigate("/");
       }
       // Handle response, store token, redirect user, etc.
     } catch (error) {
       console.error("Login error", error.response.data);
-      // Handle error
+      setError(
+        error.response.data.error || "An error occurred. Please try again."); 
     }
   };
 
@@ -71,6 +73,11 @@ function Login() {
           >
             Sign In
           </Button>
+          {error && (
+            <Typography variant="body2" color="error" align="center">
+              {error}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Container>

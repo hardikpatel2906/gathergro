@@ -2,27 +2,44 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 
-function Navbar() {
+
+
+const CustomAppBar = styled(AppBar)({
+  background: "#B4D9B6", // Change the background color to a nice color
+});
+
+const CustomButton = styled(Button)({
+  marginLeft: "10px", // Add some spacing between buttons,
+  color: "black",
+});
+
+const CustomLogoImg = styled("img")({
+  height: "70px", // Adjust the height of the logo as needed
+  marginRight: "10px", // Add spacing between the logo and buttons
+});
+
+const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <CustomAppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            GatherGro
-          </Typography>
-          <Button color="inherit" href="/login">
+          {/* Include your custom logo */}
+          <CustomLogoImg src="/gathergrologo.webp" alt="Custom Logo" />
+          <Box sx={{ flexGrow: 1 }} />{" "}
+          {/* Empty box to push buttons to the right */}
+          <CustomButton  href="/login">
             Login
-          </Button>
-          <Button color="inherit" href="/register">
+          </CustomButton>
+          <CustomButton  href="/register">
             Register
-          </Button>
+          </CustomButton>
         </Toolbar>
-      </AppBar>
+      </CustomAppBar>
     </Box>
   );
-}
+};
 
 export default Navbar;
