@@ -13,8 +13,10 @@ function Login() {
     event.preventDefault();
     try {
       const response = await authService.login(email, password);
-
-      if (response.data.success) {
+      console.log(response);
+      if (response.data.status) {
+        const token = response.data.response.token;
+        localStorage.setItem("authToken", token);
         navigate("/");
       }
       // Handle response, store token, redirect user, etc.

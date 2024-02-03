@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 
@@ -22,6 +23,15 @@ const CustomLogoImg = styled("img")({
 });
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("authToken");
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/")
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
@@ -30,12 +40,17 @@ const Navbar = () => {
           <CustomLogoImg src="/gathergrologo.webp" alt="Custom Logo" />
           <Box sx={{ flexGrow: 1 }} />{" "}
           {/* Empty box to push buttons to the right */}
-          <CustomButton  href="/login">
-            Login
-          </CustomButton>
-          <CustomButton  href="/register">
-            Register
-          </CustomButton>
+          {!token && (
+            <CustomButton color="inherit" href="/login">
+              Login
+            </CustomButton>
+          )}
+          {!token && <CustomButton href="/register">Register</CustomButton>}
+          {token && (
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </CustomAppBar>
     </Box>
