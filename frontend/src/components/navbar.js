@@ -4,8 +4,18 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("authToken");
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/")
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -13,12 +23,15 @@ function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             GatherGro
           </Typography>
-          <Button color="inherit" href="/login">
+          {!token && <Button color="inherit" href="/login">
             Login
-          </Button>
-          <Button color="inherit" href="/register">
+          </Button>}
+          {!token && <Button color="inherit" href="/register">
             Register
-          </Button>
+          </Button>}
+          {token && <Button color="inherit" onClick={handleLogout}>
+            Logout
+          </Button>}
         </Toolbar>
       </AppBar>
     </Box>
