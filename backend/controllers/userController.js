@@ -14,7 +14,7 @@ const userRegistration = async (req, res) => {
             return res.status(400).json(400, alertMessage.users.userAlreadyExistsEmail, {});
         }
 
-        // Hash the password
+        // Hash the password //check
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user document
