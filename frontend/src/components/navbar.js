@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
@@ -37,7 +38,16 @@ const Navbar = () => {
       <CustomAppBar position="static">
         <Toolbar>
           {/* Include your custom logo */}
-          <CustomLogoImg src="/gathergrologo.webp" alt="Custom Logo" />
+          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" />
+          <Typography
+            variant="h5"
+            noWrap
+            component="div"
+            fontWeight={600}
+            color= "black"
+          >
+            GatherGro
+          </Typography>
           <Box sx={{ flexGrow: 1 }} />{" "}
           {/* Empty box to push buttons to the right */}
           {!token && (
@@ -47,9 +57,9 @@ const Navbar = () => {
           )}
           {!token && <CustomButton href="/register">Register</CustomButton>}
           {token && (
-            <Button color="inherit" onClick={handleLogout}>
+            <CustomButton color="inherit" onClick={handleLogout}>
               Logout
-            </Button>
+            </CustomButton>
           )}
         </Toolbar>
       </CustomAppBar>

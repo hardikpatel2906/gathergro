@@ -1,16 +1,17 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { generateJWT } = require("../helpers/generateJWTHelper");
+const { successResponse, errorResponse } = require("../helpers/responseHelper");
+const { alertMessage } = require("../helpers/messageHelper");
 
 const userRegistration = async (req, res) => {
     try {
-        // console.log("register api call");
         const { username, email, password, role, profileInfo } = req.body;
 
         // Check if user already exists
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ error: "User already exists" });
+            return res.status(400).json(400, alertMessage.users.userAlreadyExistsEmail, {});
         }
 
         // Hash the password
@@ -26,13 +27,13 @@ const userRegistration = async (req, res) => {
         });
 
         // Save the user to the database
-        await newUser.save();
+        const createdUser = await newUser.save();
 
         // Respond with success message
-        res.json({ success: true, message: "Registration successful" });
+        res.json(successResponse(200, alertMessage.users.createSuccess, createdUser));
     } catch (error) {
-        console.error("Registration error:", error);
-        res.status(500).json({ error: "Registration failed" });
+        // console.error("Registration error:", error);
+        res.status(500).json(errorResponse(500, alertMessage.users.createError, error));
     }
 };
 
@@ -43,24 +44,27 @@ const userLogin = async (req, res) => {
         // Check if user exists
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res.status(400).json({ error: "User not found" });
+            return res.status(400).json(errorResponse(400, alertMessage.users.noUserDataFound, {}));
         }
 
         // Check if the password is correct
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(400).json({ error: "Invalid password" });
+            return res.status(400).json(errorResponse(400, alertMessage.users.invalidPassword, {}));
         }
 
         // Create and sign a JSON Web Token (JWT)
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-
-        res.json({ success: true, token });
+        const token = await generateJWT({ _id: user._id });
+        const response = {
+            user,
+            token
+        };
+        res.status(200).json(successResponse(200, alertMessage.users.loginSuccess, response));
     } catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ error: "Login failed" });
+        // console.error("Login error:", error);
+        res.status(500).json(errorResponse(500, alertMessage.users.loginError, error));
     }
 
 }
 
-module.exports = {userRegistration, userLogin};
+module.exports = { userRegistration, userLogin };
