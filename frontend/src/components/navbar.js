@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 
 
 const CustomAppBar = styled(AppBar)({
-  background: "#B4D9B6", // Change the background color to a nice color
+  background: "#B4D9B6",
 });
 
 const CustomButton = styled(Button)({
