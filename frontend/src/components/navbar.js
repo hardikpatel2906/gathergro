@@ -37,7 +37,6 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
         <Toolbar>
-          {/* Include your custom logo */}
           <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" />
           <Typography
             variant="h5"
