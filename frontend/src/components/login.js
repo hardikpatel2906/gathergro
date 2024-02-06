@@ -6,7 +6,7 @@ import { TextField, Button, Container, Box, Typography } from "@mui/material";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State variable for error message
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -23,7 +23,8 @@ function Login() {
     } catch (error) {
       console.error("Login error", error.response.data);
       setError(
-        error.response.data.error || "An error occurred. Please try again."); 
+        error.response.data.message || "An error occurred. Please try again."
+      ); 
     }
   };
 
