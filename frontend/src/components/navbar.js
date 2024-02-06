@@ -1,9 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import { Typography } from "@mui/material";
+import { Typography, Avatar, Button , Toolbar, Box, AppBar} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
@@ -41,24 +37,29 @@ const Navbar = () => {
           <Typography
             variant="h5"
             noWrap
-            component="div"
+            component="h1"
             fontWeight={600}
-            color= "black"
+            color="black"
           >
             GatherGro
           </Typography>
           <Box sx={{ flexGrow: 1 }} />{" "}
           {/* Empty box to push buttons to the right */}
           {!token && (
-            <CustomButton color="inherit" href="/login">
-              Login
-            </CustomButton>
+            <>
+              <CustomButton color="inherit" href="/login">
+                Login
+              </CustomButton>
+              <CustomButton href="/register">Register</CustomButton>
+            </>
           )}
-          {!token && <CustomButton href="/register">Register</CustomButton>}
           {token && (
+            <>
+            <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
             <CustomButton color="inherit" onClick={handleLogout}>
               Logout
             </CustomButton>
+            </>
           )}
         </Toolbar>
       </CustomAppBar>
