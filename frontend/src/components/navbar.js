@@ -59,7 +59,9 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
         <Toolbar>
-          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" />
+          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" onClick={() => {
+            navigate("/");
+          }} />
           <Typography
             variant="h5"
             noWrap
@@ -98,6 +100,14 @@ const Navbar = () => {
                 Login
               </CustomButton>
               <CustomButton href="/register">Register</CustomButton>
+            </>
+          )}
+          {token && (
+            <>
+            <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
+            <CustomButton color="inherit" onClick={handleLogout}>
+              Logout
+            </CustomButton>
             </>
           )}
         </Toolbar>
