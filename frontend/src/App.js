@@ -5,6 +5,8 @@ import Navbar from "./components/navbar";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import ProfileUpdate from "./components/profileupdate";
+import ChangePassword from "./components/changepassword";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/" element={<Home />} /> {/* Home page route */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profileupdate" element={<ProfileUpdate />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
           {/* You can add more routes here */}
         </Routes>
       </div>
