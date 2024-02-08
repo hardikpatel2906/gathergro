@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Container, Box, Typography } from "@mui/material";
+import { TextField, Button, Container, Box, Typography, Link } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -24,7 +24,7 @@ function Login() {
       console.error("Login error", error.response.data);
       setError(
         error.response.data.message || "An error occurred. Please try again."
-      ); 
+      );
     }
   };
 
@@ -76,6 +76,12 @@ function Login() {
           >
             Sign In
           </Button>
+          <Typography variant="body2" align="center">
+            Not have account with GatherGro? 
+            <Link component="button" onClick={() => {
+              navigate("/register");
+            }}>Register</Link>
+          </Typography>
           {error && (
             <Typography variant="body2" color="error" align="center">
               {error}

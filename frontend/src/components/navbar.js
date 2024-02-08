@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Avatar, Button , Toolbar, Box, AppBar} from "@mui/material";
+import { Typography, Avatar, Button, Toolbar, Box, AppBar, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
@@ -10,7 +10,7 @@ const CustomAppBar = styled(AppBar)({
 });
 
 const CustomButton = styled(Button)({
-  marginLeft: "10px", // Add some spacing between buttons,
+  marginLeft: "10px",
   color: "black",
 });
 
@@ -33,7 +33,9 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
         <Toolbar>
-          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" />
+          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" onClick={() => {
+            navigate("/");
+          }} />
           <Typography
             variant="h5"
             noWrap
@@ -55,10 +57,12 @@ const Navbar = () => {
           )}
           {token && (
             <>
-            <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
-            <CustomButton color="inherit" onClick={handleLogout}>
-              Logout
-            </CustomButton>
+              <Tooltip title="Profile">
+                <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
+              </Tooltip>
+              <CustomButton color="inherit" onClick={handleLogout}>
+                Logout
+              </CustomButton>
             </>
           )}
         </Toolbar>
