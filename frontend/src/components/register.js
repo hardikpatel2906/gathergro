@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Box
-} from "@mui/material";
+import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Link } from "@mui/material";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -193,6 +185,12 @@ function Register() {
             Register
           </Button>
         </form>
+        <Typography mt={1} variant="body2" align="center">
+            Already have an account?
+            <Link component="button" onClick={() => {
+              navigate("/login");
+            }}>Login</Link>
+          </Typography>
       </Box>
     </Container>
   );
