@@ -102,14 +102,6 @@ const Navbar = () => {
               <CustomButton href="/register">Register</CustomButton>
             </>
           )}
-          {token && (
-            <>
-            <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
-            <CustomButton color="inherit" onClick={handleLogout}>
-              Logout
-            </CustomButton>
-            </>
-          )}
         </Toolbar>
       </CustomAppBar>
     </Box>
