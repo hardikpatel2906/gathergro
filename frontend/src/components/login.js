@@ -77,10 +77,16 @@ function Login() {
             Sign In
           </Button>
           <Typography variant="body2" align="center">
-            Not have account with GatherGro? 
-            <Link component="button" onClick={() => {
-              navigate("/register");
-            }}>Register</Link>
+            Not have account with GatherGro? &nbsp;
+            <Link
+              component="button"
+              onClick={() => {
+                navigate("/register");
+              }}
+              style={{ marginBottom: "3px" }}
+            >
+              Register
+            </Link>
           </Typography>
           {error && (
             <Typography variant="body2" color="error" align="center">
