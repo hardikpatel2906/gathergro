@@ -30,6 +30,9 @@ const CustomLogoImg = styled("img")({
 const Navbar = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
+  const role = localStorage.getItem("role");
+  const username = localStorage.getItem("username");
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleLogout = () => {
@@ -74,11 +77,20 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
           {token && (
             <>
+              {username &&
+                <Typography
+                  component="h4"
+                  fontWeight={400}
+                  color="black"
+                >
+                  Welcome, {username}
+                </Typography>}
               <Avatar
                 alt="Remy Sharp"
-                src="/gathergrologo.png"
+                // src="/gathergrologo.png"
                 onClick={handleMenuOpen}
-              />
+              >{username.split('')[0]}
+              </Avatar>
               <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -90,6 +102,11 @@ const Navbar = () => {
                 <MenuItem onClick={handleChangePassword}>
                   Change Password
                 </MenuItem>
+                {role == "farmer" &&
+                  <MenuItem onClick={handleChangePassword}>
+                    My Products
+                  </MenuItem>
+                }
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>

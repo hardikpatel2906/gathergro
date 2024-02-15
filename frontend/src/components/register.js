@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Link } from "@mui/material";
+import { toast } from "react-toastify";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -50,14 +51,16 @@ function Register() {
       );
       // console.log("Response:", response);
       if (response.data.status) {
+        toast.success(response.data.message);
         navigate("/login");
       }
       // Handle response, store token, redirect user, etc.
-    } catch (error) {
+    } catch (e) {
       // console.error("Registration error", error.response.data);
       setError(
-        error.response.data.message || "An error occurred. Please try again."
+        e.response.data.message || "An error occurred. Please try again."
       );
+      toast.success(error);
     }
   };
   // Function to validate email
