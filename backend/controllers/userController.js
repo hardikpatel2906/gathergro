@@ -66,7 +66,7 @@ const userLogin = async (req, res) => {
     }
 
     // Create and sign a JSON Web Token (JWT)
-    const token = await generateJWT({ _id: user._id });
+    const token = await generateJWT({ _id: user._id, username: user.username, role: user.role });
     const response = {
       user,
       token,
@@ -104,16 +104,16 @@ const userProfileUpdate = async (req, res) => {
       }
 
       // Update the first element of profileInfo array
-        const profileObj = user.profileInfo[0];
+      const profileObj = user.profileInfo[0];
 
       if (contact) {
-          profileObj.contact = contact;
+        profileObj.contact = contact;
       }
       if (bio) {
-          profileObj.bio = bio;
+        profileObj.bio = bio;
       }
     }
-   console.log(user);
+    console.log(user);
     // Save the updated user
     const updatedUser = await userModel.findByIdAndUpdate(
       { _id: userId },

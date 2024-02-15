@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Box, Typography, Link } from "@mui/material";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,12 +17,21 @@ function Login() {
       const response = await authService.login(email, password);
       // console.log(response);
       if (response.data.status) {
+        toast.success(response.data.message);
         const token = response.data.response.token;
+
+        // Set username and role to local-storage
+        const decoded = jwtDecode(token);
+        
+        localStorage.setItem("username", decoded.username);
+        localStorage.setItem("role", decoded.role);
         localStorage.setItem("authToken", token);
         navigate("/");
       }
       // Handle response, store token, redirect user, etc.
     } catch (error) {
+      toast.error(error.response.data.message);
+
       console.error("Login error", error.response.data);
       setError(
         error.response.data.message || "An error occurred. Please try again."
@@ -77,7 +88,7 @@ function Login() {
             Sign In
           </Button>
           <Typography variant="body2" align="center">
-            Not have account with GatherGro? 
+            Not have account with GatherGro?
             <Link component="button" onClick={() => {
               navigate("/register");
             }}>Register</Link>
