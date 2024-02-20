@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Link } from "@mui/material";
 
 function Register() {
@@ -87,14 +88,35 @@ function Register() {
       password.length >= minLength
     );
   };
+
+  const CustomButton = styled(Button)({
+    color: "black",
+    backgroundColor: "#B4D9B6",
+    paddingLeft:100,
+    paddingRight:100
+  });
+
   return (
-    <Container maxWidth="sm">
+    <div style={{flex:1, flexDirection:'row', display:'flex',height:700}}>
+      <div style={{width:'50%'}}>
+        <img 
+          src={require('../constansts/Abstraction.png')} 
+            style={{
+              width:"130%", 
+              height:"100%",
+              opacity:0.8
+            }}/>
+      </div>
+      <div style={{borderRadius:50,width:'50%'}}>
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 5,
+          marginRight:10,
+          marginLeft:10,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          borderRadius:10,
         }}
       >
         <Typography component="h1" variant="h5">
@@ -175,7 +197,7 @@ function Register() {
               {error}
             </Typography>
           )}
-          <Button
+          {/* <Button
             type="submit"
             variant="contained"
             color="primary"
@@ -183,7 +205,10 @@ function Register() {
             size="large"
           >
             Register
-          </Button>
+          </Button> */}
+        <CustomButton type="submit" variant="contained">
+        Register
+      </CustomButton>
         </form>
         <Typography mt={1} variant="body2" align="center">
             Already have an account?
@@ -192,7 +217,8 @@ function Register() {
             }}>Login</Link>
           </Typography>
       </Box>
-    </Container>
+      </div>
+      </div>
   );
 }
 

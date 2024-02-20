@@ -1,9 +1,16 @@
 import * as React from "react";
-import { Typography, Avatar, Button, Toolbar, Box, AppBar, Tooltip } from "@mui/material";
+import {
+  Typography,
+  Avatar,
+  Button,
+  Toolbar,
+  Box,
+  AppBar,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-
-
 
 const CustomAppBar = styled(AppBar)({
   background: "#B4D9B6",
@@ -15,19 +22,38 @@ const CustomButton = styled(Button)({
 });
 
 const CustomLogoImg = styled("img")({
-  height: "70px", // Adjust the height of the logo as needed
-  marginRight: "10px", // Add spacing between the logo and buttons
+  height: "70px",
+  marginRight: "10px",
+  cursor: "pointer",
 });
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const token = localStorage.getItem("authToken");
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    navigate("/")
-  }
+    navigate("/");
+  };
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfileUpdate = () => {
+    navigate("/profileupdate");
+    handleMenuClose();
+  };
+
+  const handleChangePassword = () => {
+    navigate("/changepassword");
+    handleMenuClose();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -45,24 +71,35 @@ const Navbar = () => {
           >
             GatherGro
           </Typography>
-          <Box sx={{ flexGrow: 1 }} />{" "}
-          {/* Empty box to push buttons to the right */}
+          <Box sx={{ flexGrow: 1 }} />
+          {token && (
+            <>
+              <Avatar
+                alt="Remy Sharp"
+                src="/gathergrologo.png"
+                onClick={handleMenuOpen}
+              />
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={handleProfileUpdate}>
+                  Update Profile
+                </MenuItem>
+                <MenuItem onClick={handleChangePassword}>
+                  Change Password
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </>
+          )}
           {!token && (
             <>
               <CustomButton color="inherit" href="/login">
                 Login
               </CustomButton>
               <CustomButton href="/register">Register</CustomButton>
-            </>
-          )}
-          {token && (
-            <>
-              <Tooltip title="Profile">
-                <Avatar alt="Remy Sharp" src="/gathergrologo.png" />
-              </Tooltip>
-              <CustomButton color="inherit" onClick={handleLogout}>
-                Logout
-              </CustomButton>
             </>
           )}
         </Toolbar>

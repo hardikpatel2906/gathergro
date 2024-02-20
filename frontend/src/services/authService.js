@@ -20,9 +20,19 @@ const login = (email, password) => {
   });
 };
 
+const updateProfile = (userData) => {
+  return axios.put(API_URL + "profileupdate", userData);
+};
+
+const changePassword = (passwordData) => {
+  return axios.put(API_URL + "changepassword", passwordData);
+};
+
 const authService = {
   register,
   login,
+  updateProfile,
+  changePassword,
 };
 
 export default authService;
