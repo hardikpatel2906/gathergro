@@ -27,6 +27,17 @@
         userAlreadyExistsEmail: "User already exist with given email",
         inActiveAccount: "Your account is deactivated by admin",
         blockUser: "This user is block, Please contact to admin",
+    }, 
+    products:{
+        createSuccess: 'Product saved successfully',
+        createError: 'Error while creating product, Please try again later',
+        updateSuccess: 'Product updated successfully',
+        updateError: 'Error while updating product, Please try again later',
+        deleteSucces: 'Product deleted successfully',
+        deleteError: 'Error while deleting product, please try again later',
+        listSuccess: 'Product record(s) found successfully',
+        listError: 'Product record(s) not found, please try again later',
+        noProducts: 'No product data available.'
     }
 };
 
