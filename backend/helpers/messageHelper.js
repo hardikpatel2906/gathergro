@@ -38,6 +38,17 @@
         listSuccess: 'Product record(s) found successfully',
         listError: 'Product record(s) not found, please try again later',
         noProducts: 'No product data available.'
+    },
+    categoty:{
+        createSuccess: 'Category saved successfully',
+        createError: 'Error while creating category, Please try again later',
+        updateSuccess: 'Category updated successfully',
+        updateError: 'Error while updating category, Please try again later',
+        deleteSucces: 'Category deleted successfully',
+        deleteError: 'Error while deleting category, please try again later',
+        listSuccess: 'Category record(s) found successfully',
+        listError: 'Category record(s) not found, please try again later',
+        noCategories: 'No Category data available.'
     }
 };
 

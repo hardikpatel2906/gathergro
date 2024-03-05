@@ -6,12 +6,12 @@ const productSchema = new mongoose.Schema(
             type: String
         },
         productImages: {
-            type: Array
+            type: String
         },
         vendorId: {
             type: mongoose.Schema.Types.ObjectId,
         },
-        category: {
+        categoryId: {
             type: mongoose.Schema.Types.ObjectId,
         },
         price: {

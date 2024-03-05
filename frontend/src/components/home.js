@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid, Card, CardMedia, CardContent, Typography, CardActions, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 
 const CustomButton = styled(Button)({
   background: "#B4D9B6",
@@ -8,6 +9,19 @@ const CustomButton = styled(Button)({
 });
 
 function Home() {
+  const [productList, setProductList] = useState([]);
+
+  const getProductData = async () => {
+    const result = await axios.get("http://localhost:5000/api/listProducts");
+    if (result.data.status) {
+      setProductList(result.data.response);
+    }
+  }
+
+  useEffect(() => {
+    getProductData()
+  }, [])
+
   return (
     <div>
       <h2 style={{ fontFamily: 'Nunito, sans-serif' }}>Welcome to GatherGro</h2>
@@ -16,23 +30,23 @@ function Home() {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          {Array.from(Array(8)).map((_, index) => (
+          {productList.map((product, index) => (
             <Card sx={{ maxWidth: 320, minWidth: 240, margin: 2, borderRadius: '15px' }} >
               <CardMedia
                 component="img"
                 height="200"
                 width="100"
-                image={`/produce.jpg`}
+                image={`http://localhost:5000/product_images/${product.productImages}`}
                 alt="Rubber Plant"
               // sx={{ borderRadius: '0 0 0 70px' }}
               />
               <CardContent>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="h6" component="div" style={{ fontFamily: 'Nunito, sans-serif', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    Product
+                    {product.productName}
                   </Typography>
                   <Typography variant="h6" component="div" style={{ fontFamily: 'Nunito, sans-serif' }}>
-                    $10
+                    ${product.price}
                   </Typography>
                 </div>
                 <Typography variant="body2" color="text.secondary" style={{ fontFamily: 'Nunito, sans-serif', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

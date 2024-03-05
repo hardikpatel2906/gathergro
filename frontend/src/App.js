@@ -7,8 +7,10 @@ import Login from "./components/login";
 import Register from "./components/register";
 import ProfileUpdate from "./components/profileupdate";
 import ChangePassword from "./components/changepassword";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import VendorProducts from "./components/vendorproducts";
+import AddProduct from "./components/addproduct";
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/myproducts" element={<VendorProducts />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+
           {/* You can add more routes here */}
         </Routes>
         <ToastContainer position="bottom-right" autoClose={false} />
