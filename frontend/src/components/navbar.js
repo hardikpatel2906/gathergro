@@ -102,7 +102,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleChangePassword}>
                   Change Password
                 </MenuItem>
-                {role == "farmer" &&
+                {role === "farmer" &&
                   <MenuItem onClick={handleChangePassword}>
                     My Products
                   </MenuItem>

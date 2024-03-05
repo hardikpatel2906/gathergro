@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import authService from "../services/authService";
+import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Link } from "@mui/material";
 import { toast } from "react-toastify";
