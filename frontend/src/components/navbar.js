@@ -58,6 +58,11 @@ const Navbar = () => {
     handleMenuClose();
   };
 
+  const handleMyProducts = () => {
+    navigate("/myproducts");
+    handleMenuClose();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
@@ -103,7 +108,7 @@ const Navbar = () => {
                   Change Password
                 </MenuItem>
                 {role == "farmer" &&
-                  <MenuItem onClick={handleChangePassword}>
+                  <MenuItem onClick={handleMyProducts}>
                     My Products
                   </MenuItem>
                 }

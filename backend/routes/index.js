@@ -8,7 +8,8 @@ const {
   userChangePassword,
 } = require("../controllers/userController");
 
-const { createProduct, listProducts } = require("../controllers/productController");
+const { createProduct, listProducts, listProductsByUser, upload } = require("../controllers/productController");
+const { createCategory, listCategories } = require("../controllers/categoryController");
 
 /* --- || User Routes || --- */
 route.post("/login", userLogin);
@@ -18,8 +19,12 @@ route.put("/changepassword", userChangePassword);
 
 
 /** ----- || Product Routes || ----- */
-route.post("/api/createProduct", createProduct);
+route.post("/api/createProduct", upload.single("products"), createProduct);
 route.get("/api/listProducts", listProducts)
+route.get("/api/listProductsByUser", listProductsByUser)
 
+/** ----- || Category Routes || ----- */
+route.post("/api/createCategory", createCategory);
+route.get("/api/listCategory", listCategories)
 
 module.exports = route;
