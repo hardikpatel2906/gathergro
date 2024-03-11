@@ -67,34 +67,41 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
         <Toolbar>
-          <CustomLogoImg src="/gathergrologo.png" alt="Custom Logo" onClick={() => {
-            navigate("/");
-          }} />
+          <CustomLogoImg
+            src="/gathergrologo.png"
+            alt="Custom Logo"
+            onClick={() => navigate("/")}
+          />
           <Typography
             variant="h5"
             noWrap
             component="h1"
             fontWeight={600}
             color="black"
+            sx={{ mr: 2 }} // Adjust margin here if needed
           >
             GatherGro
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           {token && (
             <>
-              {username &&
-                <Typography
-                  component="h4"
-                  fontWeight={400}
-                  color="black"
-                >
-                  Welcome, {username}
-                </Typography>}
+              {username && (
+                <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
+                  <Typography
+                    component="h4"
+                    fontWeight={400}
+                    color="black"
+                  >
+                    {username}
+                  </Typography>
+                </Box>
+              )}
               <Avatar
-                alt="Remy Sharp"
-                // src="/gathergrologo.png"
+                alt="User Avatar"
                 onClick={handleMenuOpen}
-              >{username.split('')[0]}
+                sx={{ cursor: "pointer" }} 
+              >
+                {username.charAt(0)}
               </Avatar>
               <Menu
                 anchorEl={anchorEl}
@@ -107,11 +114,9 @@ const Navbar = () => {
                 <MenuItem onClick={handleChangePassword}>
                   Change Password
                 </MenuItem>
-                {role == "farmer" &&
-                  <MenuItem onClick={handleMyProducts}>
-                    My Products
-                  </MenuItem>
-                }
+                {role === "farmer" && (
+                  <MenuItem onClick={handleMyProducts}>My Products</MenuItem>
+                )}
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>

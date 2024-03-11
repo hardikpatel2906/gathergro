@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import authService from "../services/authService";
+import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Box, Typography, Link } from "@mui/material";
 import { toast } from "react-toastify";
@@ -25,6 +25,7 @@ function Login() {
         
         localStorage.setItem("username", decoded.username);
         localStorage.setItem("role", decoded.role);
+        localStorage.setItem("userid", decoded._id);
         localStorage.setItem("authToken", token);
         navigate("/");
       }

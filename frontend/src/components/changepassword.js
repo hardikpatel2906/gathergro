@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import authService from "../services/authService";
+import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
-import authUtils from "../utils/authUtils";
+
 
 function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -24,7 +24,7 @@ function ChangePassword() {
       return;
     }
       try {
-      const userId = authUtils.getUserIdFromToken();
+        const userId = localStorage.getItem("userid");
       const response = await authService.changePassword({
         currentPassword,
         newPassword,
