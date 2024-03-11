@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import VendorProducts from "./components/vendorproducts";
 import AddProduct from "./components/addproduct";
+import SingleProduct from "./components/singleproduct";
 
 function App() {
   return (
@@ -25,8 +26,7 @@ function App() {
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/myproducts" element={<VendorProducts />} />
           <Route path="/addproduct" element={<AddProduct />} />
-
-          {/* You can add more routes here */}
+          <Route path="/product/:productId" element={<SingleProduct />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={false} />
       </div>
