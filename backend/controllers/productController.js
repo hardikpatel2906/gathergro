@@ -100,4 +100,17 @@ const listProductsByUser = async (req, res) => {
     }
 };
 
+
+const deleteProduct = async(req, res) => {
+    try {
+        if(req.query.productId){
+            const deletedProduct = await productModel.findByIdAndDelete()
+        }else{
+            // ProductId is required
+        }
+    } catch (error) {
+        
+    }
+}
+
 module.exports = { createProduct, listProducts, listProductsByUser, upload };
