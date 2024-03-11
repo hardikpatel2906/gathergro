@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import authUtils from "../utils/authUtils";
-// import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 
 const CustomButton = styled(Button)({
@@ -18,7 +16,7 @@ const columns = [
 ];
 
 const VendorProducts = () => {
-    const userId = authUtils.getUserIdFromToken();
+    const userId = localStorage.getItem("userid")
 
     const [userProductList, setUserProductList] = useState([]);
 
