@@ -8,7 +8,7 @@ const {
   userChangePassword,
 } = require("../controllers/userController");
 
-const { createProduct, listProducts, listProductsByUser, upload } = require("../controllers/productController");
+const { createProduct, listProducts, listProductsByUser, upload, deleteProduct } = require("../controllers/productController");
 const { createCategory, listCategories } = require("../controllers/categoryController");
 
 /* --- || User Routes || --- */
@@ -22,6 +22,7 @@ route.put("/changepassword", userChangePassword);
 route.post("/api/createProduct", upload.single("products"), createProduct);
 route.get("/api/listProducts", listProducts)
 route.get("/api/listProductsByUser", listProductsByUser)
+route.delete("/api/deleteProduct", deleteProduct);
 
 /** ----- || Category Routes || ----- */
 route.post("/api/createCategory", createCategory);

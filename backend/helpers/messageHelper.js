@@ -37,7 +37,8 @@
         deleteError: 'Error while deleting product, please try again later',
         listSuccess: 'Product record(s) found successfully',
         listError: 'Product record(s) not found, please try again later',
-        noProducts: 'No product data available.'
+        noProducts: 'No product data available.',
+        idRequired:'Product Id is required.'
     },
     categoty:{
         createSuccess: 'Category saved successfully',
