@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from "@mui/material";
+import { Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CustomButton = styled(Button)({
     margin: "10px",
-    color: "green",
+    background: "#B4D9B6",
+    color: 'black',
 });
 const columns = [
     // { field: 'id', headerName: 'ID', width: 70 },
@@ -16,6 +19,8 @@ const columns = [
 ];
 
 const VendorProducts = () => {
+    const navigate = useNavigate();
+
     const userId = localStorage.getItem("userid")
 
     const [userProductList, setUserProductList] = useState([]);
@@ -31,16 +36,26 @@ const VendorProducts = () => {
         getUserProductData();
     }, []);
 
-    const handleProductDelete = async(productId) => {
-        const result = await axios.delete(`http://localhost:5000/api/deleteProduct?productId=${productId}`);
+    const handleProductDelete = async (productId) => {
+        const response = await axios.delete(`http://localhost:5000/api/deleteProduct?productId=${productId}`);
+        if (response.data.status) {
+            toast.success(response.data.message);
+            navigate("/myproducts");
+        } else {
+            toast.error(response.data.message);
+        }
     }
 
     return (
         <>
-            <h1>Vendor Products</h1>
-            <CustomButton color="inherit" href="/addproduct">
-                Add Product
-            </CustomButton>
+            <Typography variant="h5" mt={2}>
+                Vendor Products
+            </Typography>
+            <div style={{ width: '90%', display: "flex", justifyContent: 'flex-end', margin: '0 auto' }}>
+                <CustomButton color="inherit" href="/addproduct">
+                    Add Product
+                </CustomButton>
+            </div>
             <TableContainer component={Paper} sx={{ width: '90%', margin: '0 auto' }}>
                 <Table size="medium" aria-label="a dense table">
                     <TableHead>
@@ -66,7 +81,7 @@ const VendorProducts = () => {
                                 <TableCell align="center"><img src={`http://localhost:5000/product_images/${row.productImages}`} width={50} height={50} /></TableCell>
                                 <TableCell align="right">{row.price}</TableCell>
                                 <TableCell align="right">{row.quantity}</TableCell>
-                                <TableCell >{row.description}</TableCell>
+                                <TableCell width={500}>{row.description}</TableCell>
                                 <TableCell align="center">
                                     <Button>View</Button>
                                     <Button>Edit</Button>

@@ -44,6 +44,9 @@ const theme = createTheme({
 const CustomButton = styled(Button)({
   background: "#B4D9B6",
   color: "black",
+  ":hover":{
+    background:"#ccf2ce"
+  }
 });
 
 function Home() {
@@ -233,11 +236,11 @@ function Home() {
                       ${product.price}
                     </Typography>
                   </CardContent>
-                  <CardActions style={{ justifyContent: "center" }}>
-                    <CustomButton size="small" variant="contained">
+                  <CardActions style={{ justifyContent: "center", margin:'10px' }}>
+                    <CustomButton size="medium" variant="contained">
                       Add to cart
                     </CustomButton>
-                    <CustomButton size="small" variant="contained">
+                    <CustomButton size="medium" variant="contained">
                       Buy Now
                     </CustomButton>
                   </CardActions>

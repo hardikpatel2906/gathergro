@@ -10,6 +10,7 @@ import {
 import ImageIcon from "@mui/icons-material/Image";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -64,8 +65,10 @@ const AddProduct = () => {
     );
 
     if (result.data.status) {
+      toast.success(result.data.message)
       navigate("/myproducts");
     } else {
+      toast.error(result.data.message)
     }
   };
 

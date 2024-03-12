@@ -36,7 +36,7 @@ const upload = multer({
  */
 const createProduct = async (req, res) => {
   try {
- 
+
 
     const {
       productName,
@@ -47,8 +47,8 @@ const createProduct = async (req, res) => {
       quantity,
       available,
     } = req.body;
-      
-      console.log(categoryId);
+
+    console.log(categoryId);
     const product = new productModel({
       productName,
       productImages: req.file.filename,
@@ -121,16 +121,27 @@ const listProductsByUser = async (req, res) => {
 };
 
 
-const deleteProduct = async(req, res) => {
-    try {
-        if(req.query.productId){
-            const deletedProduct = await productModel.findByIdAndDelete()
-        }else{
-            // ProductId is required
+const deleteProduct = async (req, res) => {
+  try {
+    if (req.query.productId) {
+      const productData = await productModel.findById(req.query.productId);
+      if (productData) {
+        const deletedProduct = await productModel.findByIdAndDelete(req.query.productId);
+        if (deletedProduct) {
+          res.status(200).json(successResponse(200, alertMessage.products.deleteSucces, deletedProduct))
+        } else {
+          res.status(500).json(errorResponse(500, alertMessage.products.deleteError, {}));
         }
-    } catch (error) {
-        
+      } else {
+        res.status(500).json(errorResponse(500, alertMessage.products.noProducts, {}));
+      }
+    } else {
+      // ProductId is required
+      res.status(500).json(errorResponse(500, alertMessage.products.idRequired, {}));
     }
+  } catch (error) {
+    res.status(500).json(errorResponse(500, alertMessage.products.deleteError, {}));
+  }
 }
 
-module.exports = { createProduct, listProducts, listProductsByUser, upload };
+module.exports = { createProduct, listProducts, listProductsByUser, deleteProduct, upload };
