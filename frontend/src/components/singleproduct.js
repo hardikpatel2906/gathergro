@@ -3,12 +3,24 @@ import { useLocation } from "react-router-dom";
 import { Box, Typography, Button, Chip, Stack, Grid } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PaymentIcon from "@mui/icons-material/Payment";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../store/cart-slice";
+import { toast } from "react-toastify";
 
 function SingleProduct() {
+  const dispatch = useDispatch();
+
   const location = useLocation();
   const { product } = location.state;
 
   if (!product) return <div>Loading...</div>;
+
+  const addItemHandler = () => {
+
+    const { _id, productName, price, productImages } = product;
+    dispatch(cartActions.addItemToCart({ _id, productName, price, productImages }));
+    toast.success(`${productName} added to cart successfully!`);
+  }
 
   return (
     <Box
@@ -67,21 +79,26 @@ function SingleProduct() {
             />
             <Chip label={`Quantity: ${product.quantity}`} />
           </Stack>
+          <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+            Sold and shiped by: {product.vendorId.username}
+          </Typography>
+          <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<ShoppingCartIcon />}
+              onClick={addItemHandler}
+            >
+              Add to Cart
+            </Button>
+            <Button variant="outlined" color="primary" startIcon={<PaymentIcon />}>
+              Buy Now
+            </Button>
+          </Box>
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<ShoppingCartIcon />}
-        >
-          Add to Cart
-        </Button>
-        <Button variant="outlined" color="primary" startIcon={<PaymentIcon />}>
-          Buy Now
-        </Button>
-      </Box>
+
     </Box>
   );
 }

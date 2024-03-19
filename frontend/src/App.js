@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navbar";
@@ -12,8 +12,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import VendorProducts from "./components/vendorproducts";
 import AddProduct from "./components/addproduct";
 import SingleProduct from "./components/singleproduct";
+import { useDispatch } from 'react-redux';
+import { cartActions } from "./store/cart-slice";
+import Cart from "./components/cart";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchCart = () => {
+      const cartState = JSON.parse(localStorage.getItem('cart'));
+      if (cartState) {
+        dispatch(cartActions.replaceCart({ items: cartState.items, totalQuantity: cartState.totalQuantity }))
+      }
+    }
+    fetchCart();
+  }, []);
   return (
     <Router>
       <div className="App">
@@ -27,6 +41,7 @@ function App() {
           <Route path="/myproducts" element={<VendorProducts />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/product/:productId" element={<SingleProduct />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={false} />
       </div>

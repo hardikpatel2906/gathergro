@@ -24,6 +24,7 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useNavigate } from "react-router-dom";
+import ItemCard from "./itemCard";
 
 const theme = createTheme({
   components: {
@@ -122,6 +123,7 @@ function Home() {
   const handleAvailabilityChange = (event) => {
     setAvailability(event.target.checked);
   };
+
  const handleCategoryChange = (event) => {
    const categoryId = event.target.value;
    const currentIndex = selectedCategories.indexOf(categoryId);
@@ -135,6 +137,7 @@ function Home() {
 
    setSelectedCategories(newChecked);
  };
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -210,7 +213,7 @@ function Home() {
           <Grid container spacing={3}>
             {filteredProducts.map((product) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
-                <Card
+                {/* <Card
                   sx={{
                     maxWidth: 320,
                     minWidth: 240,
@@ -224,7 +227,7 @@ function Home() {
                 >
                   <CardMedia
                     component="img"
-                    height="200"
+                    height="250"
                     image={`http://localhost:5000/product_images/${product.productImages}`}
                     alt={product.productName}
                   />
@@ -236,15 +239,16 @@ function Home() {
                       ${product.price}
                     </Typography>
                   </CardContent>
-                  <CardActions style={{ justifyContent: "center", margin:'10px' }}>
-                    <CustomButton size="medium" variant="contained">
+                  <CardActions style={{ justifyContent: "space-around", margin:'10px' }}>
+                    <CustomButton size="medium" variant="contained" onClick={addItemHandler} >
                       Add to cart
                     </CustomButton>
                     <CustomButton size="medium" variant="contained">
                       Buy Now
                     </CustomButton>
                   </CardActions>
-                </Card>
+                </Card> */}
+                <ItemCard product={product} />
               </Grid>
             ))}
           </Grid>

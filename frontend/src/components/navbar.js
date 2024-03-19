@@ -8,9 +8,12 @@ import {
   AppBar,
   Menu,
   MenuItem,
+  Badge,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { useSelector } from "react-redux";
 
 const CustomAppBar = styled(AppBar)({
   background: "#B4D9B6",
@@ -29,6 +32,7 @@ const CustomLogoImg = styled("img")({
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const token = localStorage.getItem("authToken");
   const role = localStorage.getItem("role");
   const username = localStorage.getItem("username");
@@ -63,6 +67,19 @@ const Navbar = () => {
     handleMenuClose();
   };
 
+  const handleCart = () => {
+    navigate("/cart")
+  }
+
+  const badgeStyle = {
+    "& .MuiBadge-badge": {
+      color: 'black',
+      backgroundColor: '#ffffff',
+      borderRadius: '10px'
+    },
+    mr:3
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
@@ -83,6 +100,9 @@ const Navbar = () => {
             GatherGro
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Badge badgeContent={totalQuantity} sx={badgeStyle} >
+            <ShoppingCartOutlinedIcon sx={{color:'black'}} onClick={handleCart} />
+          </Badge>
           {token && (
             <>
               {username && (
@@ -99,7 +119,7 @@ const Navbar = () => {
               <Avatar
                 alt="User Avatar"
                 onClick={handleMenuOpen}
-                sx={{ cursor: "pointer" }} 
+                sx={{ cursor: "pointer" }}
               >
                 {username.charAt(0)}
               </Avatar>

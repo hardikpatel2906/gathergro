@@ -37,13 +37,14 @@ const AddProduct = () => {
   }, []);
 
   const onImgChange = (e) => {
-    // console.log(e.target.files)
+    console.log(e.target.files)
     setProductImage(e.target.files[0]);
   };
   const categoryChangeHandle = (e) => {
     // console.log(e.target.value)
     setCategoryId(e.target.value);
   };
+
   const formSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -85,6 +86,7 @@ const AddProduct = () => {
         <Typography component="h1" variant="h5">
           Add Product
         </Typography>
+        {productImage && <img height={70} src={productImage != "" ? URL.createObjectURL(productImage) : null} />}
         <form onSubmit={formSubmit}>
           <input accept="image/*" type="file" onChange={onImgChange} />
 
