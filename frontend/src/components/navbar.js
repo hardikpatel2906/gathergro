@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const CustomAppBar = styled(AppBar)({
   background: "#B4D9B6",
@@ -99,19 +100,22 @@ const Navbar = () => {
           >
             GatherGro
           </Typography>
+
           <Box sx={{ flexGrow: 1 }} />
-          <Badge badgeContent={totalQuantity} sx={badgeStyle} >
-            <ShoppingCartOutlinedIcon sx={{color:'black'}} onClick={handleCart} />
+          <CustomButton component={Link} to="/about">
+            About Us
+          </CustomButton>
+          <Badge badgeContent={totalQuantity} sx={badgeStyle}>
+            <ShoppingCartOutlinedIcon
+              sx={{ color: "black" }}
+              onClick={handleCart}
+            />
           </Badge>
           {token && (
             <>
               {username && (
                 <Box sx={{ display: "flex", alignItems: "center", mr: 1 }}>
-                  <Typography
-                    component="h4"
-                    fontWeight={400}
-                    color="black"
-                  >
+                  <Typography component="h4" fontWeight={400} color="black">
                     {username}
                   </Typography>
                 </Box>
