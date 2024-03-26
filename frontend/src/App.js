@@ -15,6 +15,8 @@ import SingleProduct from "./components/singleproduct";
 import { useDispatch } from 'react-redux';
 import { cartActions } from "./store/cart-slice";
 import Cart from "./components/cart";
+import AboutUs from "./components/aboutus";
+import CheckoutForm from "./components/chekoutform";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ function App() {
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/product/:productId" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/checkout" element={<CheckoutForm />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={false} />
       </div>

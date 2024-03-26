@@ -75,13 +75,13 @@ const Cart = () => {
                             </Box>
                         </Card>
                     ))}
-                    <CustomButton size="medium" variant="contained">Checkout - ${totalAmount.toFixed(2)}</CustomButton>
+                    <CustomButton size="medium" variant="contained" onClick={() => {navigate("/checkout");}}>Checkout - ${totalAmount.toFixed(2)}</CustomButton>
                 </>
             }
             {(cartItems.length == 0) && 
             <>
                 <Typography variant='h4'> Your Cart is Empty ! </Typography>
-                <CustomButton size="medium" variant="contained" onClick={() => {navigate("/")}}>Continue Shopping</CustomButton>
+                <CustomButton size="medium" variant="contained" onClick={() => {navigate("/");}}>Continue Shopping</CustomButton>
 
             </>}
         </div >
