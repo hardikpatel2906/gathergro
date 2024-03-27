@@ -72,6 +72,10 @@ const Navbar = () => {
     navigate("/cart")
   }
 
+  const handleMyOrders = () => {
+    navigate("/myorders")
+  }
+
   const badgeStyle = {
     "& .MuiBadge-badge": {
       color: 'black',
@@ -141,6 +145,9 @@ const Navbar = () => {
                 {role === "farmer" && (
                   <MenuItem onClick={handleMyProducts}>My Products</MenuItem>
                 )}
+                <MenuItem onClick={handleMyOrders}>
+                  My Orders
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>

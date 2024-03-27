@@ -1,76 +1,90 @@
 import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-} from "@mui/material";
+import { Box, TextField, Typography, Button, Card, CardContent, Grid, Container, } from "@mui/material";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { cartActions } from "../store/cart-slice";
+import { toast } from "react-toastify";
 
 const CheckoutForm = () => {
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const cartItems = useSelector((state) => state.cart.items);
-  const totalAmount = useSelector((state) =>
-    state.cart.items.reduce((total, item) => total + item.totalPrice, 0)
-  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userid")
 
-  const handlePlaceOrder = (event) => {
+  const [addressLine, setAddressLine] = useState("");
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
+
+  const cartItems = useSelector(state => state.cart.items);
+  const totalAmount = cartItems.map((p) => p.totalPrice).reduce((a, b) => a + b, 0);
+
+  const handlePlaceOrder = async (event) => {
     event.preventDefault();
     // Prepare the order data
     const orderData = {
-      deliveryAddress,
+      userId: userId,
       orderedItems: cartItems,
       totalPrice: totalAmount,
-      // Include any additional fields here
+      addressLine,
+      city,
+      pincode,
     };
-    console.log(orderData);
-    // Here you would typically send this data to your server
-    // via an API call for further processing
+    const result = await axios.post("http://localhost:5000/api/createOrder", orderData);
+    if (result.data.status) {
+      dispatch(cartActions.replaceCart({ totalQuantity: 0, items: [] }));
+      toast.success(result.data.message)
+      navigate("/");
+    } else {
+      toast.error(result.data.message)
+    }
   };
 
   return (
-    <Card sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
-      <CardContent>
-        <Typography variant="h5" gutterBottom component="div">
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
           Checkout
         </Typography>
         <form onSubmit={handlePlaceOrder}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="deliveryAddress"
-                label="Delivery Address"
-                multiline
-                rows={4}
-                value={deliveryAddress}
-                onChange={(e) => setDeliveryAddress(e.target.value)}
-              />
-            </Grid>
-            {/* Future fields for additional info can be added here */}
-            <Grid item xs={12}>
-              <Typography variant="h6" component="div">
-                Total Amount: ${totalAmount.toFixed(2)}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
-                Place Order
-              </Button>
-            </Grid>
-          </Grid>
+          <TextField required fullWidth id="addressLine" label="Address Line" multiline
+            margin="normal"
+            rows={4}
+            value={addressLine}
+            onChange={(e) => setAddressLine(e.target.value)}
+          />
+          <TextField required fullWidth id="city" label="City"
+            margin="normal"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <TextField required fullWidth id="pincode" label="Pin Code" value={pincode}
+            margin="normal"
+            onChange={(e) => setPincode(e.target.value)}
+          />
+
+          <Typography variant="h6" component="div" margin="normal">
+            Total Amount: ${totalAmount.toFixed(2)}
+          </Typography>
+          <Button
+            margin="normal"
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Place Order
+          </Button>
         </form>
-      </CardContent>
-    </Card>
+      </Box>
+    </Container>
   );
 };
 

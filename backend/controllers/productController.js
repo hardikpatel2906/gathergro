@@ -48,7 +48,7 @@ const createProduct = async (req, res) => {
       available,
     } = req.body;
 
-    console.log(categoryId);
+    // console.log(categoryId);
     const product = new productModel({
       productName,
       productImages: req.file.filename,
@@ -88,7 +88,7 @@ const createProduct = async (req, res) => {
  */
 const listProducts = async (req, res) => {
   try {
-    const productsData = await productModel.find();
+    const productsData = await productModel.find().populate("vendorId", "username").populate("categoryId", "categoryName");
     if (productsData && productsData.length > 0) {
       res.json(
         successResponse(200, alertMessage.products.listSuccess, productsData)
