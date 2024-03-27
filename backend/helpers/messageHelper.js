@@ -50,6 +50,17 @@
         listSuccess: 'Category record(s) found successfully',
         listError: 'Category record(s) not found, please try again later',
         noCategories: 'No Category data available.'
+    },
+    order:{
+        createSuccess: 'Order placed successfully',
+        createError: 'Error while placing category, Please try again later',
+        updateSuccess: 'Order updated successfully',
+        updateError: 'Error while updating order, Please try again later',
+        deleteSucces: 'Order deleted successfully',
+        deleteError: 'Error while deleting 0rder, please try again later',
+        listSuccess: 'Order record(s) found successfully',
+        listError: 'Order record(s) not found, please try again later',
+        noCategories: 'No order data available.'
     }
 };
 

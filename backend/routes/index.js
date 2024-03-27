@@ -10,6 +10,7 @@ const {
 
 const { createProduct, listProducts, listProductsByUser, upload, deleteProduct } = require("../controllers/productController");
 const { createCategory, listCategories } = require("../controllers/categoryController");
+const { createOrder, listOrdersByUser } = require("../controllers/orderController");
 
 /* --- || User Routes || --- */
 route.post("/login", userLogin);
@@ -26,6 +27,12 @@ route.delete("/api/deleteProduct", deleteProduct);
 
 /** ----- || Category Routes || ----- */
 route.post("/api/createCategory", createCategory);
-route.get("/api/listCategory", listCategories)
+route.get("/api/listCategory", listCategories);
+
+
+/** ------- || Order Routes || ------- */
+route.post("/api/createOrder", createOrder);
+route.get("/api/listOrdersByUser", listOrdersByUser);
+
 
 module.exports = route;
