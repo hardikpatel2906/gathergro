@@ -28,8 +28,9 @@ const ItemCard = ({ product }) => {
             sx={{
                 maxWidth: 320,
                 minWidth: 240,
+                // minHeight: 450,
                 margin: 2,
-                borderRadius: "15px",
+                // borderRadius: "15px",
                 cursor: "pointer",
             }}
         // onClick={() =>
@@ -52,6 +53,7 @@ const ItemCard = ({ product }) => {
                 <Typography variant="body2" color="textSecondary">
                     ${product.price}
                 </Typography>
+                {product.quantity < 10 && <Typography variant="body2" color="red">Only few left!</Typography>}
             </CardContent>
             <CardActions style={{ justifyContent: "space-around", margin: '10px' }}>
                 <CustomButton size="medium" variant="contained" onClick={addItemHandler} >

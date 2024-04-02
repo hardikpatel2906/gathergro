@@ -7,6 +7,7 @@ const cartSlice = createSlice({
         replaceCart(state, action) {
             state.totalQuantity = action.payload.totalQuantity;
             state.items = action.payload.items;
+            localStorage.setItem('cart', JSON.stringify(state));
         },
         addItemToCart(state, action) {
             const newItem = action.payload;
