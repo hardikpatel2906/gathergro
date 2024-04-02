@@ -210,7 +210,7 @@ function Home() {
           </DialogContent>
         </Dialog>
         <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px" }}>
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
             {filteredProducts.map((product) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
                 {/* <Card

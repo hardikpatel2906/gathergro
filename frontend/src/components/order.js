@@ -32,7 +32,7 @@ const Order = () => {
                         {row.orderDate.split('T')[0]}
                     </TableCell>
                     <TableCell align="center">{row.status}</TableCell>
-                    <TableCell align="center">{row.totalPrice}</TableCell>
+                    <TableCell align="center">{row.totalPrice.toFixed(2)}</TableCell>
                     <TableCell align="center">{row.addressLine}</TableCell>
                     <TableCell align="center">{row.city}</TableCell>
                     <TableCell align="center">{row.pincode}</TableCell>

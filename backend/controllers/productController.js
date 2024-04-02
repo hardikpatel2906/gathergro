@@ -120,7 +120,9 @@ const listProductsByUser = async (req, res) => {
   }
 };
 
-
+/**
+ * Delete Product
+ */
 const deleteProduct = async (req, res) => {
   try {
     if (req.query.productId) {
@@ -144,4 +146,33 @@ const deleteProduct = async (req, res) => {
   }
 }
 
-module.exports = { createProduct, listProducts, listProductsByUser, deleteProduct, upload };
+
+/**
+ * INCREASE QUANTITY
+ */
+const increaseQuantity = async (req, res) => {
+  try {
+    const { userId, productId, quantity } = req.body;
+    if (productId) {
+      const productData = await productModel.findById(productId);
+      if (productData) {
+        const updatedProductQty = await productModel.findByIdAndUpdate(productId, { $inc: { quantity: Number(quantity) } });
+        if (updatedProductQty) {
+          res.status(200).json(successResponse(200, alertMessage.products.updateSuccess, updatedProductQty))
+        } else {
+          res.status(500).json(errorResponse(500, alertMessage.products.updateError, {}));
+        }
+      } else {
+        res.status(500).json(errorResponse(500, alertMessage.products.noProducts, {}));
+      }
+    } else {
+      // ProductId is required
+      res.status(500).json(errorResponse(500, alertMessage.products.idRequired, {}));
+    }
+  } catch (error) {
+    res.status(500).json(errorResponse(500, alertMessage.products.updateError, {}));
+  }
+}
+
+
+module.exports = { createProduct, listProducts, listProductsByUser, deleteProduct, upload, increaseQuantity };

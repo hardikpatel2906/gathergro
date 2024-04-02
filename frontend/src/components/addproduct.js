@@ -7,10 +7,17 @@ import {
   Button,
   MenuItem,
 } from "@mui/material";
-import ImageIcon from "@mui/icons-material/Image";
+import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+const CustomButton = styled(Button)({
+  marginLeft: "10px",
+  color: "black",
+  background: "#B4D9B6",
+  margin: "5px"
+});
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -37,7 +44,7 @@ const AddProduct = () => {
   }, []);
 
   const onImgChange = (e) => {
-    console.log(e.target.files)
+    // console.log(e.target.files)
     setProductImage(e.target.files[0]);
   };
   const categoryChangeHandle = (e) => {
@@ -86,7 +93,12 @@ const AddProduct = () => {
         <Typography component="h1" variant="h5">
           Add Product
         </Typography>
-        {productImage && <img height={70} src={productImage != "" ? URL.createObjectURL(productImage) : null} />}
+        {productImage != "" &&
+          <>
+            <img height={70} width={70} src={productImage != "" ? URL.createObjectURL(productImage) : null} />
+            <CustomButton onClick={() => { setProductImage("") }}>Delete</CustomButton>
+          </>
+        }
         <form onSubmit={formSubmit}>
           <input accept="image/*" type="file" onChange={onImgChange} />
 
