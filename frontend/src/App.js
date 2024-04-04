@@ -18,6 +18,7 @@ import Cart from "./components/cart";
 import AboutUs from "./components/aboutus";
 import CheckoutForm from "./components/chekoutform";
 import Order from "./components/order";
+import VendorOrders from "./components/vendororders";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/checkout" element={<CheckoutForm />} />
           <Route path="/myorders" element={<Order />} />
+          <Route path="/vendororders" element={<VendorOrders />} />
         </Routes>
         <ToastContainer position="bottom-right" autoClose={false} />
       </div>
