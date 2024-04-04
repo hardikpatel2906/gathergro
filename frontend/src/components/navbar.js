@@ -67,6 +67,10 @@ const Navbar = () => {
     navigate("/myproducts");
     handleMenuClose();
   };
+   const handleCustomerOrders = () => {
+     navigate("/vendororders");
+     handleMenuClose();
+   };
 
   const handleCart = () => {
     navigate("/cart")
@@ -143,11 +147,14 @@ const Navbar = () => {
                   Change Password
                 </MenuItem>
                 {role === "farmer" && (
-                  <MenuItem onClick={handleMyProducts}>My Products</MenuItem>
+                  <>
+                    <MenuItem onClick={handleMyProducts}>My Products</MenuItem>
+                    <MenuItem onClick={handleCustomerOrders}>
+                      Consumer Orders
+                    </MenuItem>
+                  </>
                 )}
-                <MenuItem onClick={handleMyOrders}>
-                  My Orders
-                </MenuItem>
+                <MenuItem onClick={handleMyOrders}>My Orders</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>
