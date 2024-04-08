@@ -148,7 +148,7 @@ const VendorProducts = () => {
                                             </form>
                                         </Box>
                                     </Popover>
-                                    <Button>Edit</Button>
+                                    <Button onClick={() => { navigate(`/updateproduct/${row._id}`); }}>Edit</Button>
                                     {/* <Button onClick={() => handleProductDelete(row._id)}>Delete</Button> */}
                                     <Button onClick={handleDialogOpen}>Delete</Button>
                                     <Dialog
