@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Box, TextField, Typography, Button, Card, CardContent, Grid, Container, } from "@mui/material";
-import { useSelector } from "react-redux";
+import { Box, TextField, Typography, Button, Container } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart-slice";
 import { toast } from "react-toastify";
@@ -10,34 +9,50 @@ import { toast } from "react-toastify";
 const CheckoutForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userid")
-
+  const userId = localStorage.getItem("userid");
   const [addressLine, setAddressLine] = useState("");
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
+  const [email, setEmail] = useState("");
 
-  const cartItems = useSelector(state => state.cart.items);
-  const totalAmount = cartItems.map((p) => p.totalPrice).reduce((a, b) => a + b, 0);
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   const handlePlaceOrder = async (event) => {
     event.preventDefault();
-    // Prepare the order data
-    const orderData = {
-      userId: userId,
-      orderedItems: cartItems,
-      totalPrice: totalAmount,
-      addressLine,
-      city,
-      pincode,
-    };
-    const result = await axios.post("http://localhost:5000/api/createOrder", orderData);
-    if (result.data.status) {
-      dispatch(cartActions.replaceCart({ totalQuantity: 0, items: [] }));
-      toast.success(result.data.message)
-      navigate("/");
-    } else {
-      toast.error(result.data.message)
+    // Loop through cart items and create an order for each
+    for (let item of cartItems) {
+      const orderData = {
+        userId: userId,
+        orderedItems: [item], // Send each item as a separate order
+        totalPrice: item.price * item.quantity,
+        addressLine,
+        city,
+        pincode,
+        email,
+      };
+
+      try {
+        const result = await axios.post(
+          "http://localhost:5000/api/createOrder",
+          orderData
+        );
+        if (result.data.status) {
+          toast.success("Order placed for " + item.productName);
+        } else {
+          toast.error("Failed to place order for " + item.productName);
+        }
+      } catch (error) {
+        toast.error("Error placing order for " + item.productName);
+      }
     }
+
+    // Clear the cart after placing orders
+    dispatch(cartActions.replaceCart({ totalQuantity: 0, items: [] }));
+    navigate("/");
   };
 
   return (
@@ -54,20 +69,45 @@ const CheckoutForm = () => {
           Checkout
         </Typography>
         <form onSubmit={handlePlaceOrder}>
-          <TextField required fullWidth id="addressLine" label="Address Line" multiline
+          <TextField
+            required
+            fullWidth
+            id="addressLine"
+            label="Address Line"
+            multiline
             margin="normal"
             rows={4}
             value={addressLine}
             onChange={(e) => setAddressLine(e.target.value)}
           />
-          <TextField required fullWidth id="city" label="City"
+          <TextField
+            required
+            fullWidth
+            id="city"
+            label="City"
             margin="normal"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-          <TextField required fullWidth id="pincode" label="Pin Code" value={pincode}
+          <TextField
+            required
+            fullWidth
+            id="pincode"
+            label="Pin Code"
+            value={pincode}
             margin="normal"
             onChange={(e) => setPincode(e.target.value)}
+          />
+          <TextField
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <Typography variant="h6" component="div" margin="normal">

@@ -17,9 +17,24 @@ const CustomButton = styled(Button)({
 const ItemCard = ({ product }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { _id, productName, price, productImages } = product;
+    const { _id, productName, price, productImages, vendorId } = product;
     const addItemHandler = () => {
-        dispatch(cartActions.addItemToCart({ _id, productName, price, productImages }));
+        console.log("Adding to cart:", {
+          _id,
+          productName,
+          price,
+          productImages,
+          vendorId,
+        });
+        dispatch(
+          cartActions.addItemToCart({
+            _id,
+            productName,
+            price,
+            productImages,
+            vendorId,
+          })
+        );
         toast.success(`${productName} added to cart successfully!`);
     }
 

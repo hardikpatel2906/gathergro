@@ -18,7 +18,7 @@ const Order = () => {
             }
         };
         fetchOrders();
-    }, []);
+    }, []); 
 
 
     const Row = ({row}) => {
