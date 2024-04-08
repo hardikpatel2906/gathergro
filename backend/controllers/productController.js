@@ -36,17 +36,7 @@ const upload = multer({
  */
 const createProduct = async (req, res) => {
   try {
-
-
-    const {
-      productName,
-      vendorId,
-      categoryId,
-      price,
-      description,
-      quantity,
-      available,
-    } = req.body;
+    const { productName, vendorId, categoryId, price, description, quantity, available } = req.body;
 
     // console.log(categoryId);
     const product = new productModel({
@@ -83,6 +73,7 @@ const createProduct = async (req, res) => {
   }
 };
 
+
 /**
  * List Products
  */
@@ -100,6 +91,7 @@ const listProducts = async (req, res) => {
     res.json(errorResponse(500, alertMessage.products.listError, {}));
   }
 };
+
 
 /**
  * LIST PRODUCTS BY USER
@@ -121,7 +113,7 @@ const listProductsByUser = async (req, res) => {
 };
 
 /**
- * Delete Product
+ * DELETE PRODUCT
  */
 const deleteProduct = async (req, res) => {
   try {
@@ -175,4 +167,28 @@ const increaseQuantity = async (req, res) => {
 }
 
 
-module.exports = { createProduct, listProducts, listProductsByUser, deleteProduct, upload, increaseQuantity };
+/**
+ * GET PRODUCT BY ID
+ */
+const getProductDetailById = async (req, res) => {
+  try {
+    const productId = req.query.productId;
+    if (productId) {
+      const productData = await productModel.findById(productId);
+      if (productData) {
+        res.status(200).json(successResponse(200, alertMessage.products.listSuccess, productData))
+      } else {
+        res.status(500).json(errorResponse(500, alertMessage.products.noProducts, {}));
+      }
+    } else {
+      // ProductId is required
+      res.status(500).json(errorResponse(500, alertMessage.products.idRequired, {}));
+    }
+  } catch (error) {
+    res.status(500).json(errorResponse(500, alertMessage.products.listError, {}));
+  }
+}
+
+
+
+module.exports = { createProduct, listProducts, listProductsByUser, deleteProduct, upload, increaseQuantity, getProductDetailById };

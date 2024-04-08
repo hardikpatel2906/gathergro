@@ -1,6 +1,5 @@
 const express = require("express");
 const route = express.Router();
-module.exports = route;
 const {
   userLogin,
   userRegistration,
@@ -39,6 +38,7 @@ route.get("/api/listProducts", listProducts);
 route.get("/api/listProductsByUser", listProductsByUser);
 route.delete("/api/deleteProduct", deleteProduct);
 route.put("/api/increaseQuantity", increaseQuantity);
+// route.get("/api/getProductDetailById", getProductDetailById);
 
 /** ----- || Category Routes || ----- */
 route.post("/api/createCategory", createCategory);
