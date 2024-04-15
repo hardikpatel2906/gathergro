@@ -3,7 +3,11 @@ const productModel = require("../models/productModel");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const { alertMessage } = require("../helpers/messageHelper");
 const mongoose = require("mongoose");
-
+const axios = require("axios");
+const ElasticEmail = require("@elasticemail/elasticemail-client");
+const client = ElasticEmail.ApiClient.instance;
+const apikey = client.authentications["apikey"];
+apikey.apiKey = process.env.ELASTIC_EMAIL_API_KEY; 
 /**
  * CREATE ORDER
  */
@@ -36,18 +40,21 @@ const createOrder = async (req, res) => {
         email,
       });
       await order.save();
-      return order; // You might want to return some identifier here
+      const receiptMessage = `<h1>Order Confirmation</h1><p>Thank you for your order!</p><p>Total Price: $${orderTotalPrice}</p>`;
+      await sendReceiptEmail(email, "Your Order Receipt", receiptMessage);
+      return order; 
     });
 
-    // Wait for all orders to be created
     await Promise.all(orderPromises);
 
-    res.json(
-      successResponse(200, "Order created successfully for each item", {})
-    );
+  res.json(
+    successResponse(200, "Order created and email sent successfully", {})
+  );
   } catch (error) {
     console.error("Failed to create order:", error);
-    res.json(errorResponse(500, "Failed to create order", error));
+     res.json(
+       errorResponse(500, "Failed to create order or send email", error)
+     );
   }
 };
 
@@ -130,6 +137,42 @@ const updateOrderStatus = async (req, res) => {
     res.json(errorResponse(500, "Failed to update order status", error));
   }
 };
+
+const sendReceiptEmail = async (email, subject, message) => {
+  const emailsApi = new ElasticEmail.EmailsApi();
+
+  const emailData = {
+    Recipients: {
+      To: [email],
+    },
+    Content: {
+      Body: [
+        {
+          ContentType: "HTML",
+          Charset: "utf-8",
+          Content: message,
+        },
+      ],
+      From: "krushal.sadariya11@gmail.com", 
+      Subject: subject,
+    },
+    Options: {
+      IsTransactional: true,
+    },
+  };
+
+  const callback = function (error, data, response) {
+    if (error) {
+      console.error("Failed to send email:", error);
+    } else {
+      console.log("API called successfully. Email sent:", data);
+    }
+  };
+
+  emailsApi.emailsTransactionalPost(emailData, callback);
+};
+
+
 
 
 module.exports = {
