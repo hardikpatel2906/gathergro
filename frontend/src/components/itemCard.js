@@ -7,8 +7,9 @@ import { cartActions } from "../store/cart-slice";
 import { toast } from "react-toastify";
 
 const CustomButton = styled(Button)({
-    background: "#B4D9B6",
-    color: "black",
+    background: "#27ae60",
+    fontWeight:"bold",
+    color: "white",
     ":hover": {
         background: "#ccf2ce"
     }

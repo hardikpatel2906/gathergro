@@ -14,6 +14,7 @@ const {
   upload,
   deleteProduct,
   increaseQuantity,
+  getProductDetailById,
 } = require("../controllers/productController");
 const {
   createCategory,
@@ -24,6 +25,8 @@ const {
   listOrdersByUser,
   ordersByVendor,
   updateOrderStatus,
+  createCheckout,
+  webhook,
 } = require("../controllers/orderController");
 
 /* --- || User Routes || --- */
@@ -38,7 +41,7 @@ route.get("/api/listProducts", listProducts);
 route.get("/api/listProductsByUser", listProductsByUser);
 route.delete("/api/deleteProduct", deleteProduct);
 route.put("/api/increaseQuantity", increaseQuantity);
-// route.get("/api/getProductDetailById", getProductDetailById);
+route.get("/api/getProductDetailById", getProductDetailById);
 
 /** ----- || Category Routes || ----- */
 route.post("/api/createCategory", createCategory);
@@ -49,5 +52,9 @@ route.post("/api/createOrder", createOrder);
 route.get("/api/listOrdersByUser", listOrdersByUser);
 route.get("/api/ordersByVendor", ordersByVendor);
 route.post("/api/updateOrderStatus", updateOrderStatus);
+route.post("/api/createCheckout", createCheckout);
+
+route.post('/webhook', express.raw({type: 'application/json'}), webhook);
+
 
 module.exports = route;
