@@ -3,6 +3,12 @@ const productModel = require("../models/productModel");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const { alertMessage } = require("../helpers/messageHelper");
 const mongoose = require("mongoose");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const ElasticEmail = require("@elasticemail/elasticemail-client");
+const client = ElasticEmail.ApiClient.instance;
+const apikey = client.authentications["apikey"];
+apikey.apiKey = process.env.ELASTIC_EMAIL_API_KEY;
+
 
 /**
  * CREATE ORDER
@@ -71,6 +77,7 @@ const listOrdersByUser = async (req, res) => {
   }
 };
 
+
 /**
  * ORDERS BY VENDOR
  */
@@ -131,10 +138,171 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+/**
+ * CREATE ORDER 
+ */
+const generateOrder = async (customer, data) => {
+  const items = JSON.parse(customer.metadata.cart);
+  const email = data.customer_details.email;
+  const totalPrice = (data.amount_subtotal) / 100
+
+  const newOrder = new orderModel({
+    userId: customer.metadata.userId,
+    paymentIntentId: data.payment_intent,
+    orderedItems: items,
+    email: data.customer_details.email,
+    totalPrice: totalPrice,
+    addressLine: data.customer_details.address.line1,
+    city: data.customer_details.address.city,
+    pincode: data.customer_details.address.postal_code,
+  });
+
+  try {
+    const saveOrder = await newOrder.save();
+    const receiptMessage = `<h1>Order Confirmation</h1><p>Thank you for your order!</p><p>Total Price: $${totalPrice}</p>`;
+    await sendReceiptEmail(email, "Your Order Receipt", receiptMessage);
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+const createCheckout = async (req, res) => {
+  try {
+    const { products, userId } = req.body;
+
+    // Creating customer Data
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: userId,
+        cart: JSON.stringify(products)
+      }
+    })
+
+    const lineItems = products.map((product) => ({
+      price_data: {
+        currency: "cad",
+        product_data: {
+          name: product.productName,
+          metadata: {
+            id: product.id
+          }
+          // images: [`http://localhost:5000/product_images/${product.image}`]
+        },
+        unit_amount: product.price * 100,
+      },
+      quantity: product.quantity
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      shipping_address_collection: {
+        allowed_countries: ["CA"],
+      },
+      phone_number_collection: {
+        enabled: true,
+      },
+      customer: customer.id,
+      line_items: lineItems,
+      mode: "payment",
+      success_url: "http://localhost:3000/paymentsuccess",
+      cancel_url: "http://localhost:3000/cart",
+    });
+    // console.log(session);
+    res.json({ id: session.id })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+// The library needs to be configured with your account's secret key.
+// Ensure the key is kept out of any version control system you might be using.
+// const stripe = require('stripe')('sk_test_...');
+// const express = require('express');
+// const app = express();
+
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+const endpointSecret = "whsec_de0def2815a832f0cb5cbc4c2ee768e8e986575bc2817fd07e8e3cd880bfa663";
+
+const webhook = async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+
+
+  let data;
+  let eventType;
+  let event;
+  if (endpointSecret) {
+    try {
+      event = stripe.webhooks.constructEvent(req['rawBody'], sig, endpointSecret);
+      // console.log("Webhook verified.")
+    } catch (err) {
+      // console.log(err.message);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+    data = event.data.object;
+    eventType = event.type;
+  } else {
+    data = req.body.data.object;
+    eventType = req.body.type;
+  }
+
+  if (eventType === "checkout.session.completed") {
+    stripe.customers.retrieve(data.customer).then((customer) => {
+      // console.log(customer);
+      // console.log("data: ==>", data);
+      generateOrder(customer, data);
+    }).catch((err) => console.log(err.message))
+  }
+  // Return a 200 response to acknowledge receipt of the event
+  res.send().end();
+};
+
+
+
+const sendReceiptEmail = async (email, subject, message) => {
+  const emailsApi = new ElasticEmail.EmailsApi();
+
+  const emailData = {
+    Recipients: {
+      To: [email],
+    },
+    Content: {
+      Body: [
+        {
+          ContentType: "HTML",
+          Charset: "utf-8",
+          Content: message,
+        },
+      ],
+      From: "krushal.sadariya11@gmail.com",
+      Subject: subject,
+    },
+    Options: {
+      IsTransactional: true,
+    },
+  };
+
+  const callback = function (error, data, response) {
+    if (error) {
+      console.error("Failed to send email:", error);
+    } else {
+      console.log("API called successfully. Email sent:", data);
+    }
+  };
+
+  emailsApi.emailsTransactionalPost(emailData, callback);
+};
+
+
 
 module.exports = {
   createOrder,
   listOrdersByUser,
   ordersByVendor,
   updateOrderStatus,
+  createCheckout,
+  webhook
 };

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart-slice";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CheckoutForm = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,27 @@ const CheckoutForm = () => {
     navigate("/");
   };
 
+
+  const makePayment = async () => {
+    // console.log("Hello")
+    const stripe = await loadStripe("pk_test_51P3WBGP3QiX5wZP6swEDPqAfsRzjSBIdnsjn2nDFNe3dFgQOKZK4sVUAVPeog7Sg6krgyZUFI4HwGQs81cpQfdKY00uSGRUl1b")
+
+    const body = {
+      userId: userId,
+      products: cartItems
+    }
+
+    const response = await axios.post("http://localhost:5000/api/createCheckout", body);
+
+    const result = stripe.redirectToCheckout({
+      sessionId: response.data.id
+    });
+   
+    if (result.error) {
+      console.log("err --", result.error);
+    }
+  }
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -68,7 +90,9 @@ const CheckoutForm = () => {
         <Typography component="h1" variant="h5">
           Checkout
         </Typography>
-        <form onSubmit={handlePlaceOrder}>
+        <form
+        // onSubmit={handlePlaceOrder}
+        >
           <TextField
             required
             fullWidth
@@ -115,10 +139,11 @@ const CheckoutForm = () => {
           </Typography>
           <Button
             margin="normal"
-            type="submit"
+            // type="submit"
             variant="contained"
             color="primary"
             fullWidth
+            onClick={makePayment}
           >
             Place Order
           </Button>

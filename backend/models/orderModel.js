@@ -10,11 +10,17 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    paymentIntentId: {
+      type: String
+    },
     orderedItems: {
       type: Array,
     },
     email: {
       type: String,
+    },
+    phone: {
+      type: String
     },
     totalPrice: {
       type: Number,

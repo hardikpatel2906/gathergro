@@ -10,7 +10,9 @@ dotenv.config();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buffer) => (req['rawBody'] = buffer),
+}));
 
 app.use(express.static('./assets'));
 // Define routes
