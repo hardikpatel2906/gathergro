@@ -63,7 +63,7 @@ const AddProduct = () => {
     formData.append("description", description);
     formData.append("quantity", quantity);
     formData.append("available", true);
-    // console.log(formData);
+
     const result = await axios.post(
       "http://localhost:5000/api/createProduct",
       formData,

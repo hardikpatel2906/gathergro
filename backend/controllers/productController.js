@@ -3,12 +3,22 @@ const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const { alertMessage } = require("../helpers/messageHelper");
 const multer = require("multer");
 const path = require("path");
+const cloudinary = require('cloudinary').v2;
+
+//Cloudnary Configuration ----------------------
+cloudinary.config({
+  cloud_name: process.env.CN_CLOUD_NAME,
+  api_key: process.env.CN_API_KEY,
+  api_secret: process.env.CN_API_SECRET
+});
+
+//----------------------------------------------
 
 // ------------------ | File Upload | -------------------
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./assets/product_images");
-  },
+  // destination: (req, file, cb) => {
+  //   cb(null, "./assets/product_images");
+  // },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "_" + file.originalname);
   },
@@ -36,12 +46,19 @@ const upload = multer({
  */
 const createProduct = async (req, res) => {
   try {
+    console.log(req.body);
     const { productName, vendorId, categoryId, price, description, quantity, available } = req.body;
+    console.log(productName, vendorId, categoryId, price, description, quantity, available)
+
+    console.log(req.file)
+    const imageUploadResult = await cloudinary.uploader.upload(req.file.path)
+    console.log(imageUploadResult);
+
 
     // console.log(categoryId);
     const product = new productModel({
       productName,
-      productImages: req.file.filename,
+      productImages: imageUploadResult.secure_url,
       vendorId,
       categoryId,
       price,

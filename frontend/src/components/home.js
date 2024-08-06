@@ -210,44 +210,9 @@ function Home() {
           </DialogContent>
         </Dialog>
         <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px" }}>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             {filteredProducts.map((product) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
-                {/* <Card
-                  sx={{
-                    maxWidth: 320,
-                    minWidth: 240,
-                    margin: 2,
-                    borderRadius: "15px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    navigate(`/product/${product._id}`, { state: { product } })
-                  }
-                >
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={`http://localhost:5000/product_images/${product.productImages}`}
-                    alt={product.productName}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" component="div">
-                      {product.productName}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      ${product.price}
-                    </Typography>
-                  </CardContent>
-                  <CardActions style={{ justifyContent: "space-around", margin:'10px' }}>
-                    <CustomButton size="medium" variant="contained" onClick={addItemHandler} >
-                      Add to cart
-                    </CustomButton>
-                    <CustomButton size="medium" variant="contained">
-                      Buy Now
-                    </CustomButton>
-                  </CardActions>
-                </Card> */}
+              <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={product._id}>
                 <ItemCard product={product} />
               </Grid>
             ))}

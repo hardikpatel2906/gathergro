@@ -67,10 +67,10 @@ const Navbar = () => {
     navigate("/myproducts");
     handleMenuClose();
   };
-   const handleCustomerOrders = () => {
-     navigate("/vendororders");
-     handleMenuClose();
-   };
+  const handleCustomerOrders = () => {
+    navigate("/vendororders");
+    handleMenuClose();
+  };
 
   const handleCart = () => {
     navigate("/cart")
@@ -86,7 +86,7 @@ const Navbar = () => {
       backgroundColor: '#ffffff',
       borderRadius: '10px'
     },
-    mr:3
+    mr: 3
   };
 
   return (
@@ -110,9 +110,9 @@ const Navbar = () => {
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
-          <CustomButton component={Link} to="/about">
+          {/* <CustomButton component={Link} to="/about">
             About Us
-          </CustomButton>
+          </CustomButton> */}
           <Badge badgeContent={totalQuantity} sx={badgeStyle}>
             <ShoppingCartOutlinedIcon
               sx={{ color: "black" }}

@@ -118,7 +118,7 @@ const VendorProducts = () => {
                                 <TableCell component="th" scope="row">
                                     {row.productName}
                                 </TableCell>
-                                <TableCell align="center"><img src={`http://localhost:5000/product_images/${row.productImages}`} width={50} height={50} /></TableCell>
+                                <TableCell align="center"><img src={row.productImages} width={50} height={50} /></TableCell>
                                 <TableCell align="right">{row.price}</TableCell>
                                 <TableCell align="right">{row.quantity}</TableCell>
                                 <TableCell width={500}>{row.description}</TableCell>
