@@ -86,7 +86,7 @@ const ItemCard = ({ product }) => {
                     label="weight"
                 >
                     <MenuItem value={"lb"}>lb</MenuItem>
-                    <MenuItem value={"kg"}>kg</MenuItem>
+
                 </Select>
                 {product.quantity < 10 && <Typography variant="body2" color="red">Only few left!</Typography>}
             </CardContent>
