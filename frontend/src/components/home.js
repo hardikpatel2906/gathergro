@@ -1,25 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  TextField,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Slider,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
+import {  Box,  Grid,  Card,  CardMedia,  CardContent,  Typography,  CardActions,  Button,  TextField,  IconButton,  Dialog,  DialogTitle,  DialogContent,  FormGroup,  FormControlLabel,  Checkbox,  Slider,  ThemeProvider,  createTheme,} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import FilterListIcon from "@mui/icons-material/FilterList";

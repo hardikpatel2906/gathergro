@@ -78,7 +78,7 @@ const ItemCard = ({ product }) => {
                     ${weight == "kg" ? (product.price * 2.2).toFixed(2) : product.price}
                 </Typography>
                 {/* <InputLabel id="p-weight">Weight</InputLabel> */}
-                <Select
+                {/* <Select
                     // labelId="p-weight"
                     // id="weight"
                     value={weight}
@@ -87,7 +87,7 @@ const ItemCard = ({ product }) => {
                 >
                     <MenuItem value={"lb"}>lb</MenuItem>
                     <MenuItem value={"kg"}>kg</MenuItem>
-                </Select>
+                </Select> */}
                 {product.quantity < 10 && <Typography variant="body2" color="red">Only few left!</Typography>}
             </CardContent>
             <CardActions style={{ justifyContent: "space-around", margin: '10px' }}>

@@ -1,33 +1,14 @@
 const express = require("express");
 const route = express.Router();
-const {
-  userLogin,
-  userRegistration,
-  userProfileUpdate,
-  userChangePassword,
-} = require("../controllers/userController");
+const { userLogin, userRegistration, userProfileUpdate, userChangePassword } = require("../controllers/userController");
 
-const {
-  createProduct,
-  listProducts,
-  listProductsByUser,
-  upload,
-  deleteProduct,
-  increaseQuantity,
-  getProductDetailById,
-} = require("../controllers/productController");
-const {
-  createCategory,
-  listCategories,
-} = require("../controllers/categoryController");
-const {
-  createOrder,
-  listOrdersByUser,
-  ordersByVendor,
-  updateOrderStatus,
-  createCheckout,
-  webhook,
-} = require("../controllers/orderController");
+const { createProduct, listProducts, listProductsByUser, upload, deleteProduct, increaseQuantity, getProductDetailById } = require("../controllers/productController");
+
+const { createCategory, listCategories, } = require("../controllers/categoryController");
+
+const { createOrder, listOrdersByUser, ordersByVendor, updateOrderStatus, createCheckout, webhook } = require("../controllers/orderController");
+
+const { farmersList } = require("../controllers/farmersController");
 
 /* --- || User Routes || --- */
 route.post("/login", userLogin);
@@ -54,7 +35,8 @@ route.get("/api/ordersByVendor", ordersByVendor);
 route.post("/api/updateOrderStatus", updateOrderStatus);
 route.post("/api/createCheckout", createCheckout);
 
-route.post('/webhook', express.raw({type: 'application/json'}), webhook);
+route.post('/webhook', express.raw({ type: 'application/json' }), webhook);
 
+route.get('/api/farmersList', farmersList);
 
 module.exports = route;

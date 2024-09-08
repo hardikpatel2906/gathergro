@@ -21,6 +21,7 @@ import Order from "./components/order";
 import UpdateProduct from "./components/updateproduct";
 import VendorOrders from "./components/vendororders";
 import PaymentSuccess from "./components/paymentsuccess";
+import FarmersList from "./components/FarmersList";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
+        <FarmersList />
         <Routes>
           <Route path="/" element={<Home />} /> {/* Home page route */}
           <Route path="/login" element={<Login />} />
