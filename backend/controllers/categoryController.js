@@ -2,7 +2,9 @@ const { alertMessage } = require("../helpers/messageHelper");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const categoryModel = require("../models/categoryModel");
 
-
+/*
+CREATE CATEGORY
+*/
 const createCategory = async (req, res) => {
     try {
         const { categoryName } = req.body;

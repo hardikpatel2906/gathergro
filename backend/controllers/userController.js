@@ -4,6 +4,9 @@ const { generateJWT } = require("../helpers/generateJWTHelper");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const { alertMessage } = require("../helpers/messageHelper");
 
+/**
+  USER REGISTRATION
+ */
 const userRegistration = async (req, res) => {
   try {
     const { username, email, password, role, profileInfo } = req.body;
@@ -11,11 +14,7 @@ const userRegistration = async (req, res) => {
     // Check if user already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      res
-        .status(400)
-        .json(
-          errorResponse(400, alertMessage.users.userAlreadyExistsEmail, {})
-        );
+      res.status(400).json(errorResponse(400, alertMessage.users.userAlreadyExistsEmail, {}));
     }
 
     // Hash the password //check
@@ -34,17 +33,17 @@ const userRegistration = async (req, res) => {
     const createdUser = await newUser.save();
 
     // Respond with success message
-    res.json(
-      successResponse(200, alertMessage.users.createSuccess, createdUser)
-    );
+    res.json(successResponse(200, alertMessage.users.createSuccess, createdUser));
   } catch (error) {
-    // console.error("Registration error:", error);
-    res
-      .status(500)
-      .json(errorResponse(500, alertMessage.users.createError, error));
+    // Response with catched error
+    res.status(500).json(errorResponse(500, alertMessage.users.createError, error));
   }
 };
 
+
+/**
+  USER LOGIN
+ */
 const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -82,6 +81,10 @@ const userLogin = async (req, res) => {
   }
 };
 
+
+/**
+  USER PROFILE UPDATE
+ */
 const userProfileUpdate = async (req, res) => {
   try {
     console.log("Inside the profile update");
@@ -133,7 +136,9 @@ const userProfileUpdate = async (req, res) => {
 };
 
 
-
+/**
+  CHANGE PASSWORD
+ */
 const userChangePassword = async (req, res) => {
   try {
     const userId = req.body.userId;
@@ -176,9 +181,4 @@ const userChangePassword = async (req, res) => {
   }
 };
 
-module.exports = {
-  userRegistration,
-  userLogin,
-  userProfileUpdate,
-  userChangePassword,
-};
+module.exports = { userRegistration, userLogin, userProfileUpdate, userChangePassword };

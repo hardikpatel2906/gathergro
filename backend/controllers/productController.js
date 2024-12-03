@@ -42,20 +42,13 @@ const upload = multer({
 });
 
 /**
- * Create Product
+ * CREATE PRODUCT
  */
 const createProduct = async (req, res) => {
   try {
-    console.log(req.body);
     const { productName, vendorId, categoryId, price, description, quantity, available } = req.body;
-    console.log(productName, vendorId, categoryId, price, description, quantity, available)
-
-    console.log(req.file)
     const imageUploadResult = await cloudinary.uploader.upload(req.file.path)
-    console.log(imageUploadResult);
 
-
-    // console.log(categoryId);
     const product = new productModel({
       productName,
       productImages: imageUploadResult.secure_url,
@@ -70,20 +63,10 @@ const createProduct = async (req, res) => {
     const createdProduct = await product.save();
 
     if (createdProduct) {
-      res.json(
-        successResponse(
-          200,
-          alertMessage.products.createSuccess,
-          createdProduct
-        )
-      );
+      res.json(successResponse(200, alertMessage.products.createSuccess, createdProduct));
     } else {
       res.json(errorResponse(500, alertMessage.products.createError, {}));
     }
-    //     } else {
-
-    //     }
-    // })
   } catch (error) {
     console.log(error);
     res.json(errorResponse(500, alertMessage.products.createError, error));
@@ -92,7 +75,7 @@ const createProduct = async (req, res) => {
 
 
 /**
- * List Products
+ * LIST PRODUCTS
  */
 const listProducts = async (req, res) => {
   try {
@@ -128,6 +111,7 @@ const listProductsByUser = async (req, res) => {
     res.json(errorResponse(500, alertMessage.products.listError, {}));
   }
 };
+
 
 /**
  * DELETE PRODUCT

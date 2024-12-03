@@ -2,6 +2,11 @@ const userModel = require("../models/userModel");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 const { alertMessage } = require("../helpers/messageHelper");
 
+
+/*
+FARMERS LIST
+PARAMS TO PASS IS ROLE AS FARMER
+*/
 const farmersList = async (req, res) => {
     try {
         const farmersList = await userModel.find({ role: "farmer" });
