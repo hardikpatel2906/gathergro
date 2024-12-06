@@ -44,19 +44,19 @@ const createOrder = async (req, res) => {
       await order.save();
       const receiptMessage = `<h1>Order Confirmation</h1><p>Thank you for your order!</p><p>Total Price: $${orderTotalPrice}</p>`;
       await sendReceiptEmail(email, "Your Order Receipt", receiptMessage);
-      return order; 
+      return order;
     });
 
     await Promise.all(orderPromises);
 
-  res.json(
-    successResponse(200, "Order created and email sent successfully", {})
-  );
+    res.json(
+      successResponse(200, "Order created and email sent successfully", {})
+    );
   } catch (error) {
     console.error("Failed to create order:", error);
-     res.json(
-       errorResponse(500, "Failed to create order or send email", error)
-     );
+    res.json(
+      errorResponse(500, "Failed to create order or send email", error)
+    );
   }
 };
 
@@ -95,8 +95,7 @@ const ordersByVendor = async (req, res) => {
     const ordersData = await orderModel
       .find({ vendorId: vendorId }) // Directly use vendorId in your query
       .populate("userId", "username") // Example of populating user details
-      // You can adjust or remove this populate() call based on your needs
-      .exec(); // Execute the query
+      .exec(); // Execute the query   // You can adjust or remove this populate() call based on your needs
 
     if (ordersData.length > 0) {
       res.json(successResponse(200, "Orders fetched successfully", ordersData));
@@ -104,7 +103,7 @@ const ordersByVendor = async (req, res) => {
       res.json(successResponse(200, "No orders found for this vendor", []));
     }
   } catch (error) {
-    console.error("Failed to fetch orders for vendor:", error);
+    // console.error("Failed to fetch orders for vendor:", error);
     res.json(errorResponse(500, "Failed to fetch orders", error));
   }
 };
