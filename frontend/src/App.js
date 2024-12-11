@@ -39,7 +39,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <FarmersList />
+        {/* <FarmersList /> */}
         <Routes>
           <Route path="/" element={<Home />} /> {/* Home page route */}
           <Route path="/login" element={<Login />} />
@@ -57,7 +57,7 @@ function App() {
           <Route path="/vendororders" element={<VendorOrders />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
         </Routes>
-        <ToastContainer position="bottom-right" autoClose={1500} />
+        <ToastContainer position="top-center" autoClose={1500} />
       </div>
     </Router>
   );

@@ -4,6 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Box, Typography, Link } from "@mui/material";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import { styled } from "@mui/material/styles";
+
+
+const CustomLogoImg = styled("img")({
+  height: "150px",
+  marginBottom:"20px"
+
+});
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -22,7 +31,7 @@ function Login() {
 
         // Set username and role to local-storage
         const decoded = jwtDecode(token);
-        
+
         localStorage.setItem("username", decoded.username);
         localStorage.setItem("role", decoded.role);
         localStorage.setItem("userid", decoded._id);
@@ -50,10 +59,11 @@ function Login() {
           alignItems: "center",
         }}
       >
+        <CustomLogoImg src="/gather-gro-home.png" alt="Custom Logo" onClick={() => navigate("/")} />
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: 350 }}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -82,11 +92,10 @@ function Login() {
           />
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
           <Typography variant="body2" align="center">
             Not have account with GatherGro? &nbsp;

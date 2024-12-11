@@ -9,10 +9,10 @@ import { useState } from "react";
 
 const CustomButton = styled(Button)({
     background: "#27ae60",
-    fontWeight: "bold",
+    fontFamily:'Jost',
     color: "white",
     ":hover": {
-        background: "#ccf2ce"
+        background: "#0b873f"
     }
 });
 

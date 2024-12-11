@@ -26,7 +26,7 @@ const CustomButton = styled(Button)({
 });
 
 const CustomLogoImg = styled("img")({
-  height: "70px",
+  height: "40px",
   marginRight: "10px",
   cursor: "pointer",
 });
@@ -93,21 +93,8 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <CustomAppBar position="static">
         <Toolbar>
-          <CustomLogoImg
-            src="/gathergrologo.png"
-            alt="Custom Logo"
-            onClick={() => navigate("/")}
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="h1"
-            fontWeight={600}
-            color="black"
-            sx={{ mr: 2 }} // Adjust margin here if needed
-          >
-            GatherGro
-          </Typography>
+          <CustomLogoImg src="/gather-gro.png" alt="Custom Logo" onClick={() => navigate("/")} />
+          {/* <Typography variant="h5" noWrap component="h1" fontWeight={600} color="black" sx={{ mr: 2, fontFamily:'Jost' }}>GatherGro</Typography> */}
 
           <Box sx={{ flexGrow: 1 }} />
           {/* <CustomButton component={Link} to="/about">
@@ -164,7 +151,7 @@ const Navbar = () => {
               <CustomButton color="inherit" href="/login">
                 Login
               </CustomButton>
-              <CustomButton href="/register">Register</CustomButton>
+              {/* <CustomButton href="/register">Register</CustomButton> */}
             </>
           )}
         </Toolbar>
