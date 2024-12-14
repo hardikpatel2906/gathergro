@@ -34,12 +34,7 @@ function SingleProduct() {
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Typography
-        variant="h3"
-        component="h1"
-        gutterBottom
-        sx={{ mb: 4, textAlign: "center" }}
-      >
+      <Typography variant="h3" component="h1" gutterBottom sx={{ mb: 2, fontFamily: "Jost", alignContent: "baseline" }}      >
         {product.productName}
       </Typography>
 
@@ -57,7 +52,8 @@ function SingleProduct() {
               objectFit: "contain",
               borderRadius: 2,
             }}
-            src={`http://localhost:5000/product_images/${product.productImages}`}
+            // src={`http://localhost:5000/product_images/${product.productImages}`}
+            src={`${product.productImages}`}
             alt={product.productName}
           />
         </Grid>
@@ -65,33 +61,34 @@ function SingleProduct() {
           <Typography
             variant="body1"
             color="text.primary"
-            sx={{ mb: 2, textAlign: "justify" }}
+            sx={{ mb: 2, textAlign: "justify", fontFamily: "Jost" }}
           >
             {product.description}
           </Typography>
-          <Typography variant="h5" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="h5" color="text.secondary" sx={{ mb: 2, fontFamily: "Jost" }}>
             ${product.price}
           </Typography>
           <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-            <Chip
+            <Chip sx={{ fontFamily: "Jost" }}
               label={product.available ? "Available" : "Unavailable"}
               color={product.available ? "success" : "error"}
             />
-            <Chip label={`Quantity: ${product.quantity}`} />
+            <Chip label={`Quantity: ${product.quantity}`} sx={{ fontFamily: "Jost" }} />
           </Stack>
-          <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="h6" color="text.secondary" sx={{ mb: 2, fontFamily: "Jost" }}>
             Sold and shiped by: {product.vendorId.username}
           </Typography>
-          <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}>
+          <Box sx={{ mt: 1, display: "flex", alignContent: "baseline", gap: 2 }}>
             <Button
               variant="contained"
               color="primary"
               startIcon={<ShoppingCartIcon />}
               onClick={addItemHandler}
+              sx={{ fontFamily: "Jost" }}
             >
               Add to Cart
             </Button>
-            <Button variant="outlined" color="primary" startIcon={<PaymentIcon />}>
+            <Button variant="outlined" color="primary" startIcon={<PaymentIcon />} sx={{ fontFamily: "Jost" }}  >
               Buy Now
             </Button>
           </Box>

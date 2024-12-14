@@ -62,8 +62,8 @@ const ItemCard = ({ product }) => {
         >
             <CardMedia
                 component="img"
-                height="250"
-                width="250"
+                height="230"
+                width="230"
                 // image={`http://localhost:5000/product_images/${product.productImages}`}
                 image={product.productImages}
                 alt={product.productName}
