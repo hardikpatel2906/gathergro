@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart-slice";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const CustomButton = styled(Button)({
     background: "#27ae60",
-    fontFamily:'Jost',
+    fontFamily: 'Jost',
     color: "white",
     ":hover": {
         background: "#0b873f"
@@ -70,13 +71,24 @@ const ItemCard = ({ product }) => {
                     navigate(`/product/${product._id}`, { state: { product } })
                 }
             />
-            <CardContent>
-                <Typography variant="h6" component="div">
-                    {product.productName}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    ${weight == "kg" ? (product.price * 2.2).toFixed(2) : product.price}
-                </Typography>
+            <CardContent style={{ display: "flex", justifyContent: "space-between", margin: '0 10px' }}>
+                <div>
+                    <Typography variant="h6" component="div" style={{ fontFamily: "Jost" }}>
+                        {product.productName}
+                    </Typography>
+                    <Typography variant="body1" style={{ fontFamily: "Jost" }}>
+                        ${weight == "kg" ? (product.price * 2.2).toFixed(2) : product.price}
+                    </Typography>
+                    <Typography variant="body2" style={{ fontFamily: "Jost" }}>
+                        Sold By: {product.vendorId.username}
+                    </Typography>
+                </div>
+                <div>
+                    <Typography variant="body2" component="div" style={{ fontFamily: "Jost" }}>
+                        4.5<StarBorderIcon style={{ height: "15px" }} />
+                    </Typography>
+                </div>
+
                 {/* <InputLabel id="p-weight">Weight</InputLabel> */}
                 {/* <Select
                     // labelId="p-weight"
@@ -90,7 +102,7 @@ const ItemCard = ({ product }) => {
                 </Select> */}
                 {product.quantity < 10 && <Typography variant="body2" color="red">Only few left!</Typography>}
             </CardContent>
-            <CardActions style={{ justifyContent: "space-around", margin: '10px' }}>
+            <CardActions style={{ justifyContent: "space-between", margin: '10px' }}>
                 <CustomButton size="medium" variant="contained" onClick={addItemHandler} >
                     Add to cart
                 </CustomButton>
