@@ -68,7 +68,7 @@ const Cart = () => {
                 <>
                     {cartItems.map((product) => (
                         <Card key={product.id} sx={{ display: 'flex', margin: '15px' }}>
-                            <CardMedia component='img' image={`http://localhost:5000/product_images/${product.image}`} sx={{ width: 150, height: 150 }} alt="product image" />
+                            <CardMedia component='img' image={product.image} sx={{ width: 150, height: 150 }} alt="product image" />
                             <Box sx={{ flexDirection: 'column', display: 'inline-block', width: '80%', verticalAlign: 'top' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <CardContent sx={{  padding: '10px' }}>
@@ -96,7 +96,7 @@ const Cart = () => {
                                         />
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '0 10px' }}>
-                                        <Typography variant="body2" color="text.secondary" component="div" >${product.quantity * product.price}</Typography>
+                                        <Typography variant="body2" color="text.secondary" component="div" >${(product.quantity * product.price).toFixed(2)}</Typography>
                                     </div>
                                 </Box>
                             </Box>
