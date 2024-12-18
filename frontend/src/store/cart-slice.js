@@ -17,15 +17,15 @@ const cartSlice = createSlice({
             state.changed = true;
             if (!existingItem) {
                 state.items.push({
-                  id: newItem._id,
-                  price: newItem.price,
-                  image: newItem.productImages,
-                  quantity: newItem.quantity ? newItem.quantity : 1,
-                  totalPrice: newItem.quantity
-                    ? newItem.price * newItem.quantity
-                    : newItem.price,
-                  productName: newItem.productName,
-                  vendorId: newItem.vendorId,
+                    id: newItem._id,
+                    price: newItem.price,
+                    image: newItem.productImages,
+                    quantity: newItem.quantity ? newItem.quantity : 1,
+                    totalPrice: newItem.quantity
+                        ? newItem.price * newItem.quantity
+                        : newItem.price,
+                    productName: newItem.productName,
+                    vendorId: newItem.vendorId,
                 });
             } else {
                 newItem.quantity ? existingItem.quantity = existingItem.quantity + newItem.quantity : existingItem.quantity++;
