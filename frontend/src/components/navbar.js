@@ -22,7 +22,12 @@ const CustomAppBar = styled(AppBar)({
 
 const CustomButton = styled(Button)({
   marginLeft: "10px",
-  color: "black",
+  background: "#27ae60",
+  fontFamily: 'Jost',
+  color: "white",
+  ":hover": {
+      background: "#0b873f"
+  },
 });
 
 const CustomLogoImg = styled("img")({
