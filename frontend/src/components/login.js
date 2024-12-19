@@ -19,10 +19,7 @@ const CustomButton = styled(Button)({
     color: "white",
     ":hover": {
         background: "#0b873f"
-    },
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
+    }
 });
 
 function Login() {
