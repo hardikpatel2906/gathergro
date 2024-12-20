@@ -6,10 +6,25 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const CustomButton = styled(Button)({
-    margin: "10px",
-    background: "#B4D9B6",
-    color: 'black',
+    margin: "10px 0",
+    background: "#27ae60",
+    fontFamily: 'Jost',
+    color: "white",
+    ":hover": {
+        background: "#0b873f"
+    }
 });
+
+const CustomActionButton = styled(Button)({
+    margin: "0 5px",
+    background: "#27ae60",
+    fontFamily: 'Jost',
+    color: "white",
+    ":hover": {
+        background: "#0b873f"
+    }
+});
+
 const columns = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'productName', headerName: 'Product name', width: 130 },
@@ -88,7 +103,7 @@ const VendorProducts = () => {
 
     return (
         <>
-            <Typography variant="h5" mt={2}>
+            <Typography variant="h4" align="center" sx={{ fontFamily: "Jost", marginTop:"10px"}}>
                 Vendor Products
             </Typography>
             <div style={{ width: '90%', display: "flex", justifyContent: 'flex-end', margin: '0 auto' }}>
@@ -100,13 +115,13 @@ const VendorProducts = () => {
                 <Table size="medium" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Product Name</TableCell>
-                            <TableCell align="center">Product Image</TableCell>
+                            <TableCell sx={{ fontFamily: "Jost" }}>Product Name</TableCell>
+                            <TableCell align="center" sx={{ fontFamily: "Jost" }}>Product Image</TableCell>
 
-                            <TableCell align="right">Price</TableCell>
-                            <TableCell align="right">Quantity</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell align="center">Actions</TableCell>
+                            <TableCell align="right" sx={{ fontFamily: "Jost" }}>Price</TableCell>
+                            <TableCell align="right" sx={{ fontFamily: "Jost" }}>Quantity</TableCell>
+                            <TableCell sx={{ fontFamily: "Jost" }}>Description</TableCell>
+                            <TableCell align="center" sx={{ fontFamily: "Jost" }}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -115,15 +130,15 @@ const VendorProducts = () => {
                                 key={row._id}
                             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell component="th" scope="row">
+                                <TableCell component="th" scope="row" sx={{ fontFamily: "Jost" }}>
                                     {row.productName}
                                 </TableCell>
                                 <TableCell align="center"><img src={row.productImages} width={50} height={50} /></TableCell>
-                                <TableCell align="right">{row.price}</TableCell>
-                                <TableCell align="right">{row.quantity}</TableCell>
-                                <TableCell width={500}>{row.description}</TableCell>
-                                <TableCell align="center">
-                                    <Button onClick={handlePopoverClick}>Add Quantity</Button>
+                                <TableCell align="right" sx={{ fontFamily: "Jost" }}>{row.price}</TableCell>
+                                <TableCell align="right" sx={{ fontFamily: "Jost" }}>{row.quantity}</TableCell>
+                                <TableCell width={500} sx={{ fontFamily: "Jost" }}>{row.description}</TableCell>
+                                <TableCell align="center" sx={{ fontFamily: "Jost" }}>
+                                    <CustomActionButton onClick={handlePopoverClick}>Add Quantity</CustomActionButton>
                                     <Popover
                                         id={id}
                                         open={openPopover}
@@ -143,14 +158,14 @@ const VendorProducts = () => {
                                         >
                                             <form onSubmit={() => handleQuantitySubmit(row._id)}>
                                                 <TextField type="number" label="Quantity" fullWidth margin="normal" variant="outlined" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
-                                                <Button type="submit">Add</Button>
-                                                <Button onClick={handlePopoverClose}>Close</Button>
+                                                <Button color="success" type="submit">Add</Button>
+                                                <Button color="error" onClick={handlePopoverClose}>Cancel</Button>
                                             </form>
                                         </Box>
                                     </Popover>
-                                    <Button onClick={() => { navigate(`/updateproduct/${row._id}`); }}>Edit</Button>
+                                    <CustomActionButton onClick={() => { navigate(`/updateproduct/${row._id}`); }}>Edit</CustomActionButton>
                                     {/* <Button onClick={() => handleProductDelete(row._id)}>Delete</Button> */}
-                                    <Button onClick={handleDialogOpen}>Delete</Button>
+                                    <CustomActionButton onClick={handleDialogOpen}>Delete</CustomActionButton>
                                     <Dialog
                                         open={open}
                                         onClose={handleDialogClose}
