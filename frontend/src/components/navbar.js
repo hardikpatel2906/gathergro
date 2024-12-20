@@ -91,7 +91,8 @@ const Navbar = () => {
       backgroundColor: '#ffffff',
       borderRadius: '10px'
     },
-    mr: 3
+    mr: 3,
+    fontFamilys:"Jost"
   };
 
   return (

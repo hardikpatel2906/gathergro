@@ -114,7 +114,8 @@ const Register = () => {
                 <Typography component="h1" variant="h4" sx={{ fontFamily: "Jost" }}>
                     Register
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}> */}
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <TextField
                         label="Username"
                         fullWidth
@@ -170,10 +171,9 @@ const Register = () => {
                                 checked={isFarmer}
                                 onChange={(e) => setIsFarmer(e.target.checked)}
                                 name="isFarmer"
-
                             />
                         }
-                        label="I am a farmer and I want to sell my produce on this website."
+                        label={<Typography variant="body1" sx={{ fontFamily: "Jost" }}>I am a farmer and I want to sell my products on this website.</Typography>}
                     />
                     {isFarmer && (
                         <TextField
@@ -198,15 +198,18 @@ const Register = () => {
                     >
                         Register
                     </CustomButton>
-                </form>
+                    {/* </form> */}
+                </Box>
                 <Typography mt={1} variant="body2" align="center" sx={{ fontFamily: "Jost" }}>
                     Already have an account?
                     <Link component="button" onClick={() => {
                         navigate("/login");
-                    }}>Login</Link>
+                    }}>
+                        Login
+                    </Link>
                 </Typography>
             </Box>
-        </Container>
+        </Container >
     );
 }
 

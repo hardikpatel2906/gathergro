@@ -23,11 +23,12 @@ const theme = createTheme({
 });
 
 const CustomButton = styled(Button)({
-  background: "#B4D9B6",
-  color: "black",
-  ":hover":{
-    background:"#ccf2ce"
-  }
+    background: "#27ae60",
+    fontFamily: 'Jost',
+    color: "white",
+    ":hover": {
+        background: "#0b873f"
+    }
 });
 
 function Home() {
@@ -144,9 +145,9 @@ function Home() {
           </IconButton>
         </Box>
         <Dialog open={filterOpen} onClose={handleCloseFilterDialog}>
-          <DialogTitle>Filter Options</DialogTitle>
+          <DialogTitle sx={{fontFamily:"Jost"}}>Filter Options</DialogTitle>
           <DialogContent>
-            <Typography gutterBottom>Price Range</Typography>
+            <Typography gutterBottom sx={{fontFamily:"Jost"}}>Price Range</Typography>
             <Slider
               value={priceRange}
               onChange={handlePriceChange}
@@ -162,10 +163,10 @@ function Home() {
                     onChange={handleAvailabilityChange}
                   />
                 }
-                label="Available Only"
+                label={<Typography sx={{fontFamily:"Jost"}}>Available Only</Typography>}
               />
             </FormGroup>
-            <Typography gutterBottom>Categories</Typography>
+            <Typography gutterBottom sx={{fontFamily:"Jost"}}>Categories</Typography>
             {categories.map((category) => (
               <FormControlLabel
                 key={category._id}
@@ -176,17 +177,17 @@ function Home() {
                     value={category._id}
                   />
                 }
-                label={category.categoryName}
+                label={<Typography sx={{fontFamily:"Jost"}}>{category.categoryName}</Typography>}
               />
             ))}
-            <Button
+            <CustomButton
               onClick={() => {
                 applyFilters();
                 setFilterOpen(false);
               }}
             >
               Apply Filters
-            </Button>
+            </CustomButton>
           </DialogContent>
         </Dialog>
         <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px" }}>
