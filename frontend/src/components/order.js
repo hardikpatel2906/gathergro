@@ -18,10 +18,10 @@ const Order = () => {
             }
         };
         fetchOrders();
-    }, []); 
+    }, []);
 
 
-    const Row = ({row}) => {
+    const Row = ({ row }) => {
         const [open, setOpen] = useState(false);
         return (
             <>
@@ -88,7 +88,7 @@ const Order = () => {
 
     return (
         <>
-            <Typography variant="h5" mt={2}>
+            <Typography variant="h4" align="center" sx={{ fontFamily: "Jost", margin: "10px 0" }}>
                 My Orders
             </Typography>
             <TableContainer component={Paper} sx={{ width: '90%', margin: '0 auto' }}>

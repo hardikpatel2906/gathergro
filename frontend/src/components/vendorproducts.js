@@ -117,7 +117,6 @@ const VendorProducts = () => {
                         <TableRow>
                             <TableCell sx={{ fontFamily: "Jost" }}>Product Name</TableCell>
                             <TableCell align="center" sx={{ fontFamily: "Jost" }}>Product Image</TableCell>
-
                             <TableCell align="right" sx={{ fontFamily: "Jost" }}>Price</TableCell>
                             <TableCell align="right" sx={{ fontFamily: "Jost" }}>Quantity</TableCell>
                             <TableCell sx={{ fontFamily: "Jost" }}>Description</TableCell>
