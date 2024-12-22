@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Typography, Button } from "@mui/material";
 import axios from "axios";
+import { styled } from "@mui/material/styles";
+
+const CustomButton = styled(Button)({
+    marginLeft: "10px",
+    background: "#27ae60",
+    fontFamily: 'Jost',
+    color: "white",
+    ":hover": {
+        background: "#0b873f"
+    },
+});
 
 const FarmersList = () => {
     const [farmers, setFarmers] = useState([])
@@ -29,10 +40,10 @@ const FarmersList = () => {
                     >
                         {farmer.username.charAt(0)}
                     </Avatar>
-                    <Typography align="center" sx={{ fontFamily: "Jost"}}>{farmer.username}</Typography>
+                    <Typography align="center" sx={{ fontFamily: "Jost" }}>{farmer.username}</Typography>
                 </div>
             ))}
-            
+            <CustomButton>View All</CustomButton>
         </div>
     )
 };
