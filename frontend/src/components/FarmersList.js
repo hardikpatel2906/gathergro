@@ -17,9 +17,9 @@ const FarmersList = () => {
 
 
     return (
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop:"5px" }}>
-            <div style={{margin:"0 10px", border:"1px solid black"}}>
-                <Typography>All Farmers</Typography>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5px" }}>
+            <div style={{ margin: "0 10px", border: "1px solid black" }}>
+                <Typography variant="h6" sx={{ fontFamily: "Jost" }}>Farmers</Typography>
             </div>
             {farmers.map((farmer) => (
                 <div>
@@ -29,9 +29,10 @@ const FarmersList = () => {
                     >
                         {farmer.username.charAt(0)}
                     </Avatar>
-                    <Typography>{farmer.username}</Typography>
+                    <Typography align="center" sx={{ fontFamily: "Jost"}}>{farmer.username}</Typography>
                 </div>
             ))}
+            
         </div>
     )
 };
