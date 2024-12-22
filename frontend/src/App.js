@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navbar";
 import Home from "./components/home";
@@ -26,6 +26,9 @@ import FarmersList from "./components/FarmersList";
 function App() {
   const dispatch = useDispatch();
 
+  const location = useLocation();
+  console.log(location.pathname);
+
   useEffect(() => {
     const fetchCart = () => {
       const cartState = JSON.parse(localStorage.getItem('cart'));
@@ -36,30 +39,30 @@ function App() {
     fetchCart();
   }, []);
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        {/* <FarmersList /> */}
-        <Routes>
-          <Route path="/" element={<Home />} /> {/* Home page route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profileupdate" element={<ProfileUpdate />} />
-          <Route path="/changepassword" element={<ChangePassword />} />
-          <Route path="/myproducts" element={<VendorProducts />} />
-          <Route path="/addproduct" element={<AddProduct />} />
-          <Route path="/product/:productId" element={<SingleProduct />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/checkout" element={<CheckoutForm />} />
-          <Route path="/myorders" element={<Order />} />
-          <Route path="/updateproduct/:id" element={<UpdateProduct />} />
-          <Route path="/vendororders" element={<VendorOrders />} />
-          <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-        </Routes>
-        <ToastContainer position="top-center" autoClose={1500} />
-      </div>
-    </Router>
+    // <Router>
+    <div className="App">
+      <Navbar />
+      {location.pathname == "/" ? <FarmersList /> : ""}
+      <Routes>
+        <Route path="/" element={<Home />} /> {/* Home page route */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profileupdate" element={<ProfileUpdate />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/myproducts" element={<VendorProducts />} />
+        <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/product/:productId" element={<SingleProduct />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/myorders" element={<Order />} />
+        <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+        <Route path="/vendororders" element={<VendorOrders />} />
+        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+      </Routes>
+      <ToastContainer position="top-center" autoClose={1500} />
+    </div>
+    // </Router>
   );
 }
 

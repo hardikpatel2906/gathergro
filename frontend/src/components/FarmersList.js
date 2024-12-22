@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Avatar } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import axios from "axios";
 
 const FarmersList = () => {
@@ -17,14 +17,20 @@ const FarmersList = () => {
 
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop:"5px" }}>
+            <div style={{margin:"0 10px", border:"1px solid black"}}>
+                <Typography>All Farmers</Typography>
+            </div>
             {farmers.map((farmer) => (
-                <Avatar
-                    alt="User Avatar"
-                    sx={{ cursor: "pointer", margin: "10px" }}
-                >
-                    {farmer.username.charAt(0)}
-                </Avatar>
+                <div>
+                    <Avatar
+                        alt="User Avatar"
+                        sx={{ cursor: "pointer", margin: "2px 10px" }}
+                    >
+                        {farmer.username.charAt(0)}
+                    </Avatar>
+                    <Typography>{farmer.username}</Typography>
+                </div>
             ))}
         </div>
     )
