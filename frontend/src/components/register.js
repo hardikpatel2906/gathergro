@@ -105,7 +105,7 @@ const Register = () => {
         <Container maxWidth="sm">
             <Box
                 sx={{
-                    marginTop: 8,
+                    marginTop: 4,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -201,7 +201,7 @@ const Register = () => {
                     {/* </form> */}
                 </Box>
                 <Typography mt={1} variant="body2" align="center" sx={{ fontFamily: "Jost" }}>
-                    Already have an account?
+                    Already have an account? 
                     <Link component="button" onClick={() => {
                         navigate("/login");
                     }}>

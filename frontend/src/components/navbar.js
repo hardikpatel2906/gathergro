@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Typography, Avatar, Button, Toolbar, Box, AppBar, Menu, MenuItem, Badge, } from "@mui/material";
+import { useState } from "react";
+import { Typography, Avatar, Button, Toolbar, Box, AppBar, Menu, MenuItem, Badge, Dialog, DialogTitle, DialogActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -34,9 +35,22 @@ const Navbar = () => {
     const username = localStorage.getItem("username");
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleDialogOpen = () => {
+        setOpen(true)
+    }
+
+    const handleDialogClose = () => {
+        setOpen(false)
+    }
+
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userid");
         navigate("/");
     };
 
@@ -132,8 +146,23 @@ const Navbar = () => {
                                     </>
                                 )}
                                 <MenuItem onClick={handleMyOrders} sx={{ fontFamily: "Jost" }}>My Orders</MenuItem>
-                                <MenuItem onClick={handleLogout} sx={{ fontFamily: "Jost" }}>Logout</MenuItem>
+                                <MenuItem onClick={handleDialogOpen} sx={{ fontFamily: "Jost" }}>Logout</MenuItem>
                             </Menu>
+                            <Dialog
+                                open={open}
+                                onClose={handleDialogClose}
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    <Typography variant="h5" sx={{ fontFamily: "Jost" }}>Are you sure you want to logout?</Typography>
+                                </DialogTitle>
+                                <DialogActions>
+                                    <CustomButton onClick={handleDialogClose}>No</CustomButton>
+                                    <Button color="error" onClick={handleLogout} autoFocus>
+                                        Logout
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+
                         </>
                     )}
                     {!token && (

@@ -90,7 +90,7 @@ const AddProduct = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography variant="h4" sx={{ fontFamily: "Jost", mb: 2 }}>
           Add Product
         </Typography>
         {productImage != "" &&
@@ -103,7 +103,7 @@ const AddProduct = () => {
           <input accept="image/*" type="file" onChange={onImgChange} />
 
           <TextField
-            label="ProductName"
+            label="Product Name"
             fullWidth
             margin="normal"
             variant="outlined"
