@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Container, Box, Typography, Link } from "@mui/material";
+import { TextField, Button, Container, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { styled } from "@mui/material/styles";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
 const CustomLogoImg = styled("img")({
@@ -22,11 +23,28 @@ const CustomButton = styled(Button)({
     }
 });
 
+const styles = {
+    textField: {
+        '& .MuiInputBase-root': {
+            fontFamily: 'Jost',
+        },
+        '& .MuiInputLabel-root': {
+            fontFamily: 'Jost',
+        }
+    }
+}
+
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -83,6 +101,7 @@ function Login() {
                         autoComplete="email"
                         autoFocus
                         value={email}
+                        sx={styles.textField}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
@@ -92,11 +111,25 @@ function Login() {
                         fullWidth
                         name="password"
                         label="Password"
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         id="password"
                         autoComplete="current-password"
                         value={password}
+                        sx={styles.textField}
                         onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleTogglePasswordVisibility}
+                                        edge="end"
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                     <CustomButton
                         type="submit"

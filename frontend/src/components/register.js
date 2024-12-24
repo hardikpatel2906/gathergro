@@ -15,6 +15,17 @@ const CustomButton = styled(Button)({
 });
 
 
+const styles = {
+    textField: {
+        '& .MuiInputBase-root': {
+            fontFamily: 'Jost',
+        },
+        '& .MuiInputLabel-root': {
+            fontFamily: 'Jost',
+        }
+    }
+}
+
 const Register = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -123,6 +134,7 @@ const Register = () => {
                         variant="outlined"
                         value={username}
                         required
+                        sx={styles.textField}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <TextField
@@ -133,6 +145,7 @@ const Register = () => {
                         type="email"
                         value={email}
                         required
+                        sx={styles.textField}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
@@ -143,6 +156,7 @@ const Register = () => {
                         type="password"
                         value={password}
                         required
+                        sx={styles.textField}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <TextField
@@ -152,6 +166,7 @@ const Register = () => {
                         variant="outlined"
                         value={contact}
                         required
+                        sx={styles.textField}
                         onChange={(e) => setContact(e.target.value)}
                     />
                     <TextField
@@ -163,6 +178,7 @@ const Register = () => {
                         rows={4}
                         value={bio}
                         required
+                        sx={styles.textField}
                         onChange={(e) => setBio(e.target.value)}
                     />
                     <FormControlLabel sx={{ fontFamily: "Jost" }}
@@ -182,6 +198,7 @@ const Register = () => {
                             margin="normal"
                             variant="outlined"
                             value={address}
+                            sx={styles.textField}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     )}
@@ -201,7 +218,7 @@ const Register = () => {
                     {/* </form> */}
                 </Box>
                 <Typography mt={1} variant="body2" align="center" sx={{ fontFamily: "Jost" }}>
-                    Already have an account? 
+                    Already have an account?
                     <Link component="button" onClick={() => {
                         navigate("/login");
                     }}>
