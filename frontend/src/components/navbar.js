@@ -96,7 +96,7 @@ const Navbar = () => {
             borderRadius: '10px'
         },
         mr: 3,
-        fontFamilys: "Jost"
+        fontFamily: "Jost"
     };
 
     return (
