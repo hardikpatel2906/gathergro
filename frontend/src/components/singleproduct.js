@@ -92,8 +92,8 @@ const SingleProduct = () => {
                     >
                         {product.description}
                     </Typography>
-                    <Typography variant="h5" color="text.secondary" sx={{ mb: 2, fontFamily: "Jost" }}>
-                        ${product.price}
+                    <Typography variant="h5" sx={{ mb: 2, fontFamily: "Jost" }}>
+                        ${product.price} CAD
                     </Typography>
                     <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                         <Chip sx={{ fontFamily: "Jost" }}
@@ -102,7 +102,7 @@ const SingleProduct = () => {
                         />
                         <Chip label={`Quantity: ${product.quantity}`} sx={{ fontFamily: "Jost" }} />
                     </Stack>
-                    <Typography variant="h6" color="text.secondary" sx={{ mb: 2, fontFamily: "Jost" }}>
+                    <Typography variant="h6" sx={{ mb: 2, fontFamily: "Jost" }}>
                         Sold and shiped by: {product.vendorId.username}
                     </Typography>
                     <Box sx={{ mt: 1, display: "flex", alignContent: "baseline", gap: 2 }}>
@@ -118,17 +118,18 @@ const SingleProduct = () => {
             <Button variant="outlined" color="primary" startIcon={<PaymentIcon />} sx={{ fontFamily: "Jost" }}  >
               Buy Now
             </Button> */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems:"center" }}>
                             <RemoveCircleOutline
                                 color="success"
                                 onClick={removeQty}
-                                sx={{ fontSize: 35, padding: '0 10px' }}
+                                sx={{ fontSize: 30, padding: '0 10px' }}
                             />
-                            <TextField variant="outlined" id="quantity" name="quantity" value={quantity} size="small" onChange={(e) => setQuantity(e.target.value)} sx={{ width: "70px", fontFamily: "Jost" }} disabled />
+                            {/* <TextField variant="outlined" id="quantity" name="quantity" value={quantity} size="small" onChange={(e) => setQuantity(e.target.value)} sx={{ width: "70px", fontFamily: "Jost" }} disabled /> */}
+                            <Typography variant="h6" sx={{ fontFamily: "Jost" }} >{quantity}</Typography>
                             <AddCircleOutline
                                 color="success"
                                 onClick={addQty}
-                                sx={{ fontSize: 35, padding: '0 10px' }}
+                                sx={{ fontSize: 30, padding: '0 10px' }}
                             />
                         </div>
                         <CustomButton size="medium" variant="contained" onClick={addItemHandler} >

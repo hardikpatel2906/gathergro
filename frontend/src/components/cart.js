@@ -61,7 +61,7 @@ const Cart = () => {
     }
 
     return (
-        <div style={{ width: '50%', margin: '0 auto', alignItems: "center", display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width:"50%", margin: '0 auto', alignItems: "center", display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h5" sx={{ mt: 2, fontFamily: "Jost" }} >
                 Shopping Cart
             </Typography>
@@ -108,7 +108,7 @@ const Cart = () => {
             }
             {(cartItems.length == 0) &&
                 <>
-                    <Typography variant='h4' sx={{ fontFamily: "Jost", mt: 4, mb: 3}}> Your Cart is Empty !</Typography>
+                    <Typography variant='h4' sx={{ fontFamily: "Jost", mt: 4, mb: 3 }}> Your Cart is Empty !</Typography>
                     <img src='empty-cart.png' alt='Cart-Image' height={250} />
                     <CustomButton size="medium" variant="contained" onClick={() => { navigate("/"); }}>Continue Shopping</CustomButton>
                 </>}
