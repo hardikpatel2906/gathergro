@@ -27,7 +27,7 @@ function App() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   useEffect(() => {
     const fetchCart = () => {
@@ -42,7 +42,7 @@ function App() {
     // <Router>
     <div className="App">
       <Navbar />
-      {location.pathname == "/" ? <FarmersList /> : ""}
+      {/* {location.pathname == "/" ? <FarmersList /> : ""} */}
       <Routes>
         <Route path="/" element={<Home />} /> {/* Home page route */}
         <Route path="/login" element={<Login />} />

@@ -4,7 +4,7 @@ import axios from "axios";
 import { styled } from "@mui/material/styles";
 
 const CustomButton = styled(Button)({
-    marginLeft: "10px",
+    margin: "5px 0",
     background: "#27ae60",
     fontFamily: 'Jost',
     color: "white",
@@ -28,9 +28,17 @@ const FarmersList = () => {
 
 
     return (
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5px" }}>
-            <div style={{ margin: "0 10px", border: "1px solid black" }}>
-                <Typography variant="h6" sx={{ fontFamily: "Jost" }}>Farmers</Typography>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", margin: "5px", border: "1px solid black", borderRadius: "10px", height: "40vh" }}>
+            <div
+                style={{
+                    margin: "0 10px",
+                    // border: "1px solid black",
+                    display: "flex",
+                    padding: "10px",
+                    alignItems: "center"
+                }}
+            >
+                <Typography variant="h6" sx={{ fontFamily: "Jost", alignSelf: "flex-start" }}>Farmers</Typography>
             </div>
             {farmers.map((farmer) => (
                 <div>

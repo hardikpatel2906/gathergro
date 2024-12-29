@@ -5,6 +5,7 @@ import axios from "axios";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useNavigate } from "react-router-dom";
 import ItemCard from "./itemCard";
+import FarmersList from "./FarmersList";
 
 const theme = createTheme({
     components: {
@@ -140,7 +141,7 @@ function Home() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        margin: "20px",
+                        margin: "20px"
                     }}
                 >
                     <IconButton onClick={handleFilterClick}>
@@ -156,60 +157,95 @@ function Home() {
                     // sx={{ width: "auto" }}
                     />
                 </Box>
-                <Dialog open={filterOpen} onClose={handleCloseFilterDialog}>
-                    <DialogTitle sx={{ fontFamily: "Jost" }}>Filter Options</DialogTitle>
-                    <DialogContent>
-                        <Typography gutterBottom sx={{ fontFamily: "Jost" }}>Price Range</Typography>
-                        <Slider
-                            value={priceRange}
-                            onChange={handlePriceChange}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={1000}
-                        />
-                        <FormGroup>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={availability}
-                                        onChange={handleAvailabilityChange}
-                                    />
-                                }
-                                label={<Typography sx={{ fontFamily: "Jost" }}>Available Only</Typography>}
-                            />
-                        </FormGroup>
-                        <Typography gutterBottom sx={{ fontFamily: "Jost" }}>Categories</Typography>
-                        {categories.map((category) => (
-                            <FormControlLabel
-                                key={category._id}
-                                control={
-                                    <Checkbox
-                                        checked={selectedCategories.includes(category._id)}
-                                        onChange={handleCategoryChange}
-                                        value={category._id}
-                                    />
-                                }
-                                label={<Typography sx={{ fontFamily: "Jost" }}>{category.categoryName}</Typography>}
-                            />
-                        ))}
-                        <CustomButton
-                            onClick={() => {
-                                applyFilters();
-                                setFilterOpen(false);
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            mb: 2,
+                            display: "flex",
+                            // alignItems: "center",
+                            // justifyContent: "space-between",
+                            // margin: "20px",
+                            flexDirection: "column",
+                            width: "25%",
+                            height: "100vh"
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                // display: "flex",
+                                // alignItems: "center",
+                                // height: "40%"
                             }}
                         >
-                            Apply Filters
-                        </CustomButton>
-                    </DialogContent>
-                </Dialog>
-                <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px" }}>
-                    <Grid container spacing={2}>
-                        {filteredProducts.map((product) => (
-                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={product._id}>
-                                <ItemCard product={product} />
-                            </Grid>
-                        ))}
-                    </Grid>
+                            <FarmersList />
+                        </Box>
+                        <Box sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            height: "40%"
+                        }}>
+                            Map
+                        </Box>
+                    </Box>
+                    <Dialog open={filterOpen} onClose={handleCloseFilterDialog}>
+                        <DialogTitle sx={{ fontFamily: "Jost" }}>Filter Options</DialogTitle>
+                        <DialogContent>
+                            <Typography gutterBottom sx={{ fontFamily: "Jost" }}>Price Range</Typography>
+                            <Slider
+                                value={priceRange}
+                                onChange={handlePriceChange}
+                                valueLabelDisplay="auto"
+                                min={0}
+                                max={1000}
+                            />
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={availability}
+                                            onChange={handleAvailabilityChange}
+                                        />
+                                    }
+                                    label={<Typography sx={{ fontFamily: "Jost" }}>Available Only</Typography>}
+                                />
+                            </FormGroup>
+                            <Typography gutterBottom sx={{ fontFamily: "Jost" }}>Categories</Typography>
+                            {categories.map((category) => (
+                                <FormControlLabel
+                                    key={category._id}
+                                    control={
+                                        <Checkbox
+                                            checked={selectedCategories.includes(category._id)}
+                                            onChange={handleCategoryChange}
+                                            value={category._id}
+                                        />
+                                    }
+                                    label={<Typography sx={{ fontFamily: "Jost" }}>{category.categoryName}</Typography>}
+                                />
+                            ))}
+                            <CustomButton
+                                onClick={() => {
+                                    applyFilters();
+                                    setFilterOpen(false);
+                                }}
+                            >
+                                Apply Filters
+                            </CustomButton>
+                        </DialogContent>
+                    </Dialog>
+                    <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px", width: "75%" }}>
+                        <Grid container spacing={2}>
+                            {filteredProducts.map((product) => (
+                                <Grid item
+                                    // xs={12} sm={6} md={4} lg={3} xl={2} 
+                                    xs={12} sm={6} md={4}
+                                    key={product._id}>
+                                    <ItemCard product={product} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
                 </Box>
             </div>
         </ThemeProvider>
