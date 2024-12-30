@@ -28,7 +28,7 @@ const FarmersList = () => {
 
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", margin: "5px", border: "1px solid black", borderRadius: "10px", height: "40vh" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", margin: "5px", border: "1px solid black", borderRadius: "5px", height: "40vh" }}>
             <div
                 style={{
                     margin: "0 10px",
@@ -44,7 +44,7 @@ const FarmersList = () => {
                 <div>
                     <Avatar
                         alt="User Avatar"
-                        sx={{ cursor: "pointer", margin: "2px 10px" }}
+                        sx={{ cursor: "pointer"}}
                     >
                         {farmer.username.charAt(0)}
                     </Avatar>
