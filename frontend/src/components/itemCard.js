@@ -53,7 +53,7 @@ const ItemCard = ({ product }) => {
                 maxWidth: 320,
                 minWidth: 250,
                 // minHeight: 450,
-                margin: 1,
+                margin: "auto",
                 cursor: "pointer",
             }}
         // onClick={() =>
