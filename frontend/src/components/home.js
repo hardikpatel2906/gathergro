@@ -203,9 +203,18 @@ function Home() {
                         <Box sx={{
                             display: "flex",
                             alignItems: "center",
-                            height: "40%"
+                            justifyContent: "center"
+                            // height: "40%"
                         }}>
-                            <Map />
+                            {/* <Map /> */}
+                            <iframe
+                                width="450"
+                                height="450"
+                                style={{ border: "0" }}
+                                loading="lazy"
+                                allowfullscreen
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCgXytgbiFKaAPMmUypVh43ueYUZAG0SO0&q=senior+assisted+care+near+me&zoom=9">
+                            </iframe>
                         </Box>
                     </Box>
                     <Dialog open={filterOpen} onClose={handleCloseFilterDialog}>
