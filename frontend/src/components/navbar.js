@@ -136,8 +136,9 @@ const Navbar = () => {
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
+                                sx={{marginTop:'3px'}}
                             >
-                                <MenuItem onClick={handleProfileUpdate} sx={{ fontFamily: "Jost" }}>Update Profile</MenuItem>
+                                <MenuItem onClick={handleProfileUpdate} sx={{ fontFamily: "Jost" }}>My Profile</MenuItem>
                                 <MenuItem onClick={handleChangePassword} sx={{ fontFamily: "Jost" }}>Change Password</MenuItem>
                                 {role === "farmer" && (
                                     <>

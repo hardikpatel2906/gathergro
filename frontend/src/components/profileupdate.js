@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
-import { Container, Typography, TextField, Button, Box } from "@mui/material";
+import { Container, Typography, TextField, Button, Box, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 
@@ -51,6 +51,16 @@ const ProfileUpdate = () => {
         return phoneNumber.length === 10 && !isNaN(phoneNumber);
     };
 
+    const [uploadedImage, setUploadedImage] = useState(null);
+
+    // Handle file selection
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setUploadedImage(imageUrl);
+        }
+    };
     return (
         <Container maxWidth="sm">
             <Box
@@ -65,6 +75,51 @@ const ProfileUpdate = () => {
                     Update Profile
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: 2,
+                            p: 2,
+                            border: "1px solid #ccc",
+                            borderRadius: "8px",
+                            maxWidth: "300px",
+                            margin: "auto",
+                            textAlign: "center",
+                        }}
+                    >
+                        {/* Display uploaded image or placeholder */}
+                        <Avatar
+                            src={uploadedImage || "https://via.placeholder.com/150"}
+                            alt="Uploaded Preview"
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                marginBottom: 2,
+                            }}
+                        />
+
+                        <Typography variant="body1" sx={{ fontFamily: "Jost" }}>
+                            {uploadedImage ? "Your Uploaded Image" : "Upload a New Image"}
+                        </Typography>
+
+                        {/* Upload button */}
+                        <Button
+                            variant="contained"
+                            component="label"
+                            sx={{ mt: 1 }}
+                        >
+                            {uploadedImage ? "Upload Another Image" : "Upload Image"}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                hidden
+                                onChange={handleImageUpload}
+                            />
+                        </Button>
+                    </Box>
                     <TextField
                         label="Username"
                         fullWidth
