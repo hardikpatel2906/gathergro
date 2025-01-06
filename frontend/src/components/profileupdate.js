@@ -3,6 +3,7 @@ import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { DeleteOutline } from "@mui/icons-material"
 
 
 const CustomButton = styled(Button)({
@@ -13,6 +14,17 @@ const CustomButton = styled(Button)({
         background: "#0b873f"
     }
 });
+
+const styles = {
+    textField: {
+        '& .MuiInputBase-root': {
+            fontFamily: 'Jost',
+        },
+        '& .MuiInputLabel-root': {
+            fontFamily: 'Jost',
+        }
+    }
+}
 
 const ProfileUpdate = () => {
     const [username, setUsername] = useState("");
@@ -61,8 +73,15 @@ const ProfileUpdate = () => {
             setUploadedImage(imageUrl);
         }
     };
+
+    //Handle Delete Profile Image
+    const handleDeleteProfileImage = () => {
+        setUploadedImage(null);
+    }
+
+
     return (
-        <Container maxWidth="sm">
+        <Container>
             <Box
                 sx={{
                     marginTop: 8,
@@ -72,91 +91,120 @@ const ProfileUpdate = () => {
                 }}
             >
                 <Typography component="h1" variant="h4" sx={{ fontFamily: "Jost" }}>
-                    Update Profile
+                    Profile
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: 2,
-                            p: 2,
-                            border: "1px solid #ccc",
-                            borderRadius: "8px",
-                            maxWidth: "300px",
-                            margin: "auto",
-                            textAlign: "center",
-                        }}
-                    >
-                        {/* Display uploaded image or placeholder */}
-                        <Avatar
-                            src={uploadedImage || "https://via.placeholder.com/150"}
-                            alt="Uploaded Preview"
+                <Box
+                    sx={{
+                        display: "flex",
+                        // flexDirection: "row"
+                        justifyContent: "space-evenly",
+                        // alignItems: "flex-start", // Ensure boxes align at the top
+                        width: "100%", // Ensure parent container takes full width
+                        gap: 2,
+                    }}
+                >
+                    <Box sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <Box
                             sx={{
-                                width: 150,
-                                height: 150,
-                                marginBottom: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: 2,
+                                p: 2,
+                                border: "1px solid #ccc",
+                                borderRadius: "8px",
+                                maxWidth: "300px",
+                                margin: "auto",
+                                textAlign: "center",
                             }}
-                        />
-
-                        <Typography variant="body1" sx={{ fontFamily: "Jost" }}>
-                            {uploadedImage ? "Your Uploaded Image" : "Upload a New Image"}
-                        </Typography>
-
-                        {/* Upload button */}
-                        <Button
-                            variant="contained"
-                            component="label"
-                            sx={{ mt: 1 }}
                         >
-                            {uploadedImage ? "Upload Another Image" : "Upload Image"}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                hidden
-                                onChange={handleImageUpload}
+                            {/* Display uploaded image or placeholder */}
+                            <Avatar
+                                src={uploadedImage || "https://via.placeholder.com/150"}
+                                alt="Uploaded Preview"
+                                sx={{
+                                    width: 150,
+                                    height: 150,
+                                    marginBottom: 2,
+                                }}
                             />
-                        </Button>
+
+                            <Typography variant="body1" sx={{ fontFamily: "Jost" }}>
+                                {uploadedImage ? "Your Uploaded Image" : "Upload a New Image"}
+                            </Typography>
+
+                            {/* Upload button */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: 2,
+                                    textAlign: "center",
+                                    margin: "auto",
+                                }}
+                            >
+                                <CustomButton
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    {uploadedImage ? "Change Image" : "Upload Image"}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        hidden
+                                        onChange={handleImageUpload}
+                                    />
+                                </CustomButton>
+                                <DeleteOutline onClick={handleDeleteProfileImage} />
+                            </Box>
+                        </Box>
+                        <CustomButton>Update Profile Picture</CustomButton>
                     </Box>
-                    <TextField
-                        label="Username"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        value={username}
-                        required
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        label="Contact Number"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        value={contact}
-                        required
-                        onChange={(e) => setContact(e.target.value)}
-                    />
-                    <TextField
-                        label="Bio"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        multiline
-                        rows={4}
-                        value={bio}
-                        required
-                        onChange={(e) => setBio(e.target.value)}
-                    />
-                    {error && (
-                        <Typography variant="body2" color="error" align="center">
-                            {error}
-                        </Typography>
-                    )}
-                    <CustomButton type="submit" variant="contained" size="large" sx={{ mt: 3 }}>
-                        Update Profile
-                    </CustomButton>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <TextField
+                            label="Username"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            value={username}
+                            required
+                            sx={styles.textField}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                            label="Contact Number"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            value={contact}
+                            required
+                            sx={styles.textField}
+                            onChange={(e) => setContact(e.target.value)}
+                        />
+                        <TextField
+                            label="Bio"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            multiline
+                            rows={4}
+                            value={bio}
+                            required
+                            sx={styles.textField}
+                            onChange={(e) => setBio(e.target.value)}
+                        />
+                        {error && (
+                            <Typography variant="body2" color="error" align="center">
+                                {error}
+                            </Typography>
+                        )}
+                        <CustomButton type="submit" variant="contained" size="large" sx={{ mt: 3 }}>
+                            Update Profile
+                        </CustomButton>
+                    </Box>
                 </Box>
             </Box>
         </Container>
