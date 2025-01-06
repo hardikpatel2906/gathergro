@@ -33,6 +33,7 @@ const Navbar = () => {
     const token = localStorage.getItem("authToken");
     const role = localStorage.getItem("role");
     const username = localStorage.getItem("username");
+    const profilePhoto = localStorage.getItem("profilePhoto");
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [open, setOpen] = useState(false);
@@ -51,6 +52,7 @@ const Navbar = () => {
         localStorage.removeItem("role");
         localStorage.removeItem("username");
         localStorage.removeItem("userid");
+        localStorage.removeItem("profilePhoto");
         navigate("/");
     };
 
@@ -129,14 +131,15 @@ const Navbar = () => {
                                 alt="User Avatar"
                                 onClick={handleMenuOpen}
                                 sx={{ cursor: "pointer", fontFamily: "Jost", bgcolor: "#27ae60" }}
+                                src={profilePhoto ? profilePhoto : username.charAt(0)}
                             >
-                                {username.charAt(0)}
+
                             </Avatar>
                             <Menu
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
-                                sx={{marginTop:'3px'}}
+                                sx={{ marginTop: '3px' }}
                             >
                                 <MenuItem onClick={handleProfileUpdate} sx={{ fontFamily: "Jost" }}>My Profile</MenuItem>
                                 <MenuItem onClick={handleChangePassword} sx={{ fontFamily: "Jost" }}>Change Password</MenuItem>

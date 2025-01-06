@@ -68,7 +68,7 @@ const createProduct = async (req, res) => {
       res.json(errorResponse(500, alertMessage.products.createError, {}));
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.json(errorResponse(500, alertMessage.products.createError, error));
   }
 };

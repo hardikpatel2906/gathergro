@@ -62,6 +62,7 @@ function Login() {
                 localStorage.setItem("role", decoded.role);
                 localStorage.setItem("userid", decoded._id);
                 localStorage.setItem("authToken", token);
+                localStorage.setItem("profilePhoto", decoded.profilePhoto)
                 navigate("/");
             }
             // Handle response, store token, redirect user, etc.

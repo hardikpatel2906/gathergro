@@ -27,6 +27,8 @@
         userAlreadyExistsEmail: "User already exist with given email",
         inActiveAccount: "Your account is deactivated by admin",
         blockUser: "This user is block, Please contact to admin",
+        profilePhotoUpdateSuccess:"Profile photo updated successfully",
+        profilePhotoUpdateError:"Error while updating profile photo, please try again later",
     }, 
     products:{
         createSuccess: 'Product saved successfully',

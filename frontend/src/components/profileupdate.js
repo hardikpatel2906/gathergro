@@ -3,8 +3,9 @@ import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { DeleteOutline } from "@mui/icons-material"
-
+import { DeleteOutline } from "@mui/icons-material";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const CustomButton = styled(Button)({
     background: "#27ae60",
@@ -27,6 +28,10 @@ const styles = {
 }
 
 const ProfileUpdate = () => {
+
+    const userId = localStorage.getItem("userid");
+
+
     const [username, setUsername] = useState("");
     const [contact, setContact] = useState("");
     const [bio, setBio] = useState("");
@@ -69,8 +74,8 @@ const ProfileUpdate = () => {
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setUploadedImage(imageUrl);
+            // const imageUrl = URL.createObjectURL(file);
+            setUploadedImage(file);
         }
     };
 
@@ -79,6 +84,26 @@ const ProfileUpdate = () => {
         setUploadedImage(null);
     }
 
+
+    const handleProfilePhotoUopload = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("profilePhoto", uploadedImage);
+        formData.append("userId", userId);
+        const result = await axios.put(
+            "http://localhost:5000/userProfilePhotoUpdate",
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+        if (result.data.status) {
+            toast.success(result.data.message)
+            // navigate("/myproducts");
+        } else {
+            toast.error(result.data.message)
+        }
+    }
 
     return (
         <Container>
@@ -121,7 +146,7 @@ const ProfileUpdate = () => {
                         >
                             {/* Display uploaded image or placeholder */}
                             <Avatar
-                                src={uploadedImage || "https://via.placeholder.com/150"}
+                                src={uploadedImage ? URL.createObjectURL(uploadedImage) : "https://via.placeholder.com/150"}
                                 alt="Uploaded Preview"
                                 sx={{
                                     width: 150,
@@ -161,7 +186,7 @@ const ProfileUpdate = () => {
                                 <DeleteOutline onClick={handleDeleteProfileImage} />
                             </Box>
                         </Box>
-                        <CustomButton>Update Profile Picture</CustomButton>
+                        <CustomButton onClick={handleProfilePhotoUopload}>Update Profile Picture</CustomButton>
                     </Box>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
                         <TextField
