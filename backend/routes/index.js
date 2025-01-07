@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-const { userLogin, userRegistration, userProfileUpdate, userChangePassword, userProfilePhotoUpdate } = require("../controllers/userController");
+const { userLogin, userRegistration, userProfileUpdate, userChangePassword, userProfilePhotoUpdate, getUserById } = require("../controllers/userController");
 
 const { createProduct, listProducts, listProductsByUser, upload, deleteProduct, increaseQuantity, getProductDetailById } = require("../controllers/productController");
 
@@ -16,6 +16,7 @@ route.post("/register", userRegistration);
 route.put("/profileupdate", userProfileUpdate);
 route.put("/changepassword", userChangePassword);
 route.put("/userProfilePhotoUpdate", upload.single("profilePhoto"), userProfilePhotoUpdate);
+route.get("/api/getUserById/:userId", getUserById);
 
 /** ----- || Product Routes || ----- */
 route.post("/api/createProduct", upload.single("products"), createProduct);

@@ -234,7 +234,7 @@ const userProfilePhotoUpdate = async (req, res) => {
         if (result) {
             res.json(successResponse(200, alertMessage.users.profilePhotoUpdateSuccess, result));
         } else {
-            console.log("error")
+            // console.log("error")
             res.json(errorResponse(500, alertMessage.users.profilePhotoUpdateError, {}));
         }
     } catch (error) {
@@ -245,4 +245,22 @@ const userProfilePhotoUpdate = async (req, res) => {
 };
 
 
-module.exports = { userRegistration, userLogin, userProfileUpdate, userChangePassword, userProfilePhotoUpdate };
+/**
+ * GET USER BY ID
+ */
+const getUserById = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        // console.log(userId);
+        const userData = await userModel.findById(userId);
+        if (userData) {
+            res.json(successResponse(200, alertMessage.users.listSuccess, userData));
+        } else {
+            res.json(errorResponse(500, alertMessage.users.listError, {}));
+        }
+    } catch (error) {
+        res.json(errorResponse(500, alertMessage.users.listError, error));
+    }
+}
+
+module.exports = { userRegistration, userLogin, userProfileUpdate, userChangePassword, userProfilePhotoUpdate, getUserById };

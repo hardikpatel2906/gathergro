@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import authService from "../services/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Box, Avatar } from "@mui/material";
@@ -31,12 +31,30 @@ const ProfileUpdate = () => {
 
     const userId = localStorage.getItem("userid");
 
-
     const [username, setUsername] = useState("");
     const [contact, setContact] = useState("");
     const [bio, setBio] = useState("");
+    const [profilePhoto, setProfilePhoto] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const [profileImgChanged, setProfileImgChanged] = useState(false);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const result = await axios.get(`http://localhost:5000/api/getUserById/${userId}`);
+            // console.log(result.data.response.profileInfo);
+            if (result.data.status) {
+                setUsername(result.data.response.username);
+                setContact(result.data.response.profileInfo[0].contact);
+                setBio(result.data.response.profileInfo[0].bio);
+                setProfilePhoto(result.data.response.profilePhoto);
+                // setContact(result.data.response.username)
+                // setBio(result.data.response.username)
+            }
+        };
+        fetchUserData()
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -68,12 +86,12 @@ const ProfileUpdate = () => {
         return phoneNumber.length === 10 && !isNaN(phoneNumber);
     };
 
-    const [uploadedImage, setUploadedImage] = useState(null);
-
     // Handle file selection
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setProfilePhoto("");
+            setProfileImgChanged(true);
             // const imageUrl = URL.createObjectURL(file);
             setUploadedImage(file);
         }
@@ -81,6 +99,7 @@ const ProfileUpdate = () => {
 
     //Handle Delete Profile Image
     const handleDeleteProfileImage = () => {
+        setProfileImgChanged(false);
         setUploadedImage(null);
     }
 
@@ -146,7 +165,7 @@ const ProfileUpdate = () => {
                         >
                             {/* Display uploaded image or placeholder */}
                             <Avatar
-                                src={uploadedImage ? URL.createObjectURL(uploadedImage) : "https://via.placeholder.com/150"}
+                                src={profilePhoto ? profilePhoto : profileImgChanged ? URL.createObjectURL(uploadedImage) : "https://via.placeholder.com/150"}
                                 alt="Uploaded Preview"
                                 sx={{
                                     width: 150,
@@ -175,7 +194,7 @@ const ProfileUpdate = () => {
                                     variant="contained"
                                     component="label"
                                 >
-                                    {uploadedImage ? "Change Image" : "Upload Image"}
+                                    {profilePhoto ? "Change Image" : uploadedImage ? "Change Image" : "Upload Image"}
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -186,50 +205,62 @@ const ProfileUpdate = () => {
                                 <DeleteOutline onClick={handleDeleteProfileImage} />
                             </Box>
                         </Box>
-                        <CustomButton onClick={handleProfilePhotoUopload}>Update Profile Picture</CustomButton>
+                        <CustomButton disabled={!profileImgChanged ? true : false} onClick={handleProfilePhotoUopload}>Update Profile Picture</CustomButton>
                     </Box>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <TextField
-                            label="Username"
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            value={username}
-                            required
-                            sx={styles.textField}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <TextField
-                            label="Contact Number"
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            value={contact}
-                            required
-                            sx={styles.textField}
-                            onChange={(e) => setContact(e.target.value)}
-                        />
-                        <TextField
-                            label="Bio"
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            value={bio}
-                            required
-                            sx={styles.textField}
-                            onChange={(e) => setBio(e.target.value)}
-                        />
-                        {error && (
-                            <Typography variant="body2" color="error" align="center">
-                                {error}
-                            </Typography>
-                        )}
-                        <CustomButton type="submit" variant="contained" size="large" sx={{ mt: 3 }}>
-                            Update Profile
-                        </CustomButton>
+                    <Box>
+                        {/* <Typography>
+                            Username: {username}
+                        </Typography>
+                        <Typography>
+                            Contact Number:
+                        </Typography>
+                        <Typography>
+                            Bio:
+                        </Typography> */}
+                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <TextField
+                                label="Username"
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                value={username}
+                                required
+                                sx={styles.textField}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <TextField
+                                label="Contact Number"
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                value={contact}
+                                required
+                                sx={styles.textField}
+                                onChange={(e) => setContact(e.target.value)}
+                            />
+                            <TextField
+                                label="Bio"
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                multiline
+                                rows={4}
+                                value={bio}
+                                required
+                                sx={styles.textField}
+                                onChange={(e) => setBio(e.target.value)}
+                            />
+                            {error && (
+                                <Typography variant="body2" color="error" align="center">
+                                    {error}
+                                </Typography>
+                            )}
+                            <CustomButton type="submit" variant="contained" size="large" sx={{ mt: 3 }}>
+                                Update Profile
+                            </CustomButton>
+                        </Box>
                     </Box>
+
                 </Box>
             </Box>
         </Container>

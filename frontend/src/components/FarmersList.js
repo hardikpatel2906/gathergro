@@ -44,10 +44,9 @@ const FarmersList = () => {
                 <div>
                     <Avatar
                         alt="User Avatar"
-                        sx={{ cursor: "pointer"}}
-                    >
-                        {farmer.username.charAt(0)}
-                    </Avatar>
+                        sx={{ cursor: "pointer" }}
+                        src={farmer.profilePhoto ? farmer.profilePhoto : farmer.username.charAt(0)}
+                    />
                     <Typography align="center" sx={{ fontFamily: "Jost" }}>{farmer.username}</Typography>
                 </div>
             ))}
