@@ -35,6 +35,7 @@ const ProfileUpdate = () => {
     const [contact, setContact] = useState("");
     const [bio, setBio] = useState("");
     const [profilePhoto, setProfilePhoto] = useState("");
+    const [role, setRole] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [uploadedImage, setUploadedImage] = useState(null);
@@ -43,18 +44,19 @@ const ProfileUpdate = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             const result = await axios.get(`http://localhost:5000/api/getUserById/${userId}`);
-            // console.log(result.data.response.profileInfo);
+            // console.log(result.data.response);
             if (result.data.status) {
                 setUsername(result.data.response.username);
                 setContact(result.data.response.profileInfo[0].contact);
                 setBio(result.data.response.profileInfo[0].bio);
                 setProfilePhoto(result.data.response.profilePhoto);
+                setRole(result.data.response.role);
                 // setContact(result.data.response.username)
                 // setBio(result.data.response.username)
             }
         };
-        fetchUserData()
-    }, [])
+        fetchUserData();
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -208,16 +210,13 @@ const ProfileUpdate = () => {
                         <CustomButton disabled={!profileImgChanged ? true : false} onClick={handleProfilePhotoUopload}>Update Profile Picture</CustomButton>
                     </Box>
                     <Box>
-                        {/* <Typography>
-                            Username: {username}
-                        </Typography>
-                        <Typography>
-                            Contact Number:
-                        </Typography>
-                        <Typography>
-                            Bio:
+                        {/* <Typography sx={{ fontFamily: "Jost" }}>
+                            User Type: {role}
                         </Typography> */}
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <Typography sx={{ fontFamily: "Jost" }}>
+                            User Type: {role}
+                        </Typography>
                             <TextField
                                 label="Username"
                                 fullWidth
