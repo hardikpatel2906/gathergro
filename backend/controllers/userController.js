@@ -154,7 +154,7 @@ const userProfileUpdate = async (req, res) => {
                 profileObj.bio = bio;
             }
         }
-        console.log(user);
+        // console.log(user);
         // Save the updated user
         const updatedUser = await userModel.findByIdAndUpdate(
             { _id: userId },
