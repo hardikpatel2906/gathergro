@@ -6,6 +6,8 @@ import { styled } from "@mui/material/styles";
 import { DeleteOutline } from "@mui/icons-material";
 import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../services/apiServices";
+
 
 const CustomButton = styled(Button)({
     background: "#27ae60",
@@ -43,7 +45,8 @@ const ProfileUpdate = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const result = await axios.get(`http://localhost:5000/api/getUserById/${userId}`);
+            const result = await api.get(`api/getUserById/${userId}`);
+            // const result = await axios.get(`http://localhost:5000/api/getUserById/${userId}`);
             // console.log(result.data.response);
             if (result.data.status) {
                 setUsername(result.data.response.username);
@@ -66,12 +69,8 @@ const ProfileUpdate = () => {
         }
         try {
             const userId = localStorage.getItem("userid");
-            const response = await authService.updateProfile({
-                username,
-                contact,
-                bio,
-                userId,
-            });
+            const response = await api.put('profileupdate', { username, contact, bio, userId });
+            
             if (response.data.status) {
                 navigate("/");
             }
@@ -214,9 +213,9 @@ const ProfileUpdate = () => {
                             User Type: {role}
                         </Typography> */}
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: 400, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <Typography sx={{ fontFamily: "Jost" }}>
-                            User Type: {role}
-                        </Typography>
+                            <Typography sx={{ fontFamily: "Jost" }}>
+                                User Type: {role}
+                            </Typography>
                             <TextField
                                 label="Username"
                                 fullWidth
