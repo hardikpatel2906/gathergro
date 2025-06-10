@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Link } from "@mui/material";
 import { toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
+import api from "../services/apiServices";
+
+
 
 const CustomButton = styled(Button)({
     background: "#27ae60",
@@ -64,13 +67,18 @@ const Register = () => {
         }
 
         try {
-            const response = await authService.register(
-                username,
-                email,
-                password,
-                role,
-                profileInfo
-            );
+
+            const response = await api.post(`register`, {
+                username, email, password, role, profileInfo
+            }, { auth: false });
+
+            // const response = await authService.register(
+            //     username,
+            //     email,
+            //     password,
+            //     role,
+            //     profileInfo
+            // );
             // console.log("Response:", response);
             if (response.data.status) {
                 toast.success(response.data.message);

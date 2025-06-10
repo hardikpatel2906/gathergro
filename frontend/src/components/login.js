@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { styled } from "@mui/material/styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import api from "../services/apiServices";
 
 
 const CustomLogoImg = styled("img")({
@@ -49,8 +50,9 @@ function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await authService.login(email, password);
-            // console.log(response);
+            // const response = await authService.login(email, password);
+            const response = await api.post(`login`, { email, password, }, { auth: false });
+
             if (response.data.status) {
                 toast.success(response.data.message);
                 const token = response.data.response.token;

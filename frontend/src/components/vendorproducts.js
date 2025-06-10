@@ -4,6 +4,8 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import api from "../services/apiServices";
+
 
 const CustomButton = styled(Button)({
     margin: "10px 0",
@@ -57,7 +59,8 @@ const VendorProducts = () => {
 
 
     const getUserProductData = async () => {
-        const result = await axios.get(`http://localhost:5000/api/listProductsByUser?userId=${userId}`);
+        // const result = await axios.get(`http://localhost:5000/api/listProductsByUser?userId=${userId}`);
+        const result = await api.get(`api/listProductsByUser?userId=${userId}`);
         if (result.data.status) {
             setUserProductList(result.data.response);
         }
@@ -103,7 +106,7 @@ const VendorProducts = () => {
 
     return (
         <>
-            <Typography variant="h4" align="center" sx={{ fontFamily: "Jost", marginTop:"10px"}}>
+            <Typography variant="h4" align="center" sx={{ fontFamily: "Jost", marginTop: "10px" }}>
                 Vendor Products
             </Typography>
             <div style={{ width: '90%', display: "flex", justifyContent: 'flex-end', margin: '0 auto' }}>
