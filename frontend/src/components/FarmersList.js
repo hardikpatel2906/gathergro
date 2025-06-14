@@ -28,28 +28,55 @@ const FarmersList = () => {
 
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", margin: "5px", border: "1px solid black", borderRadius: "5px", height: "40vh" }}>
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "5px",
+            border: "1px solid black",
+            borderRadius: "5px",
+            height: "auto",
+            padding: "10px"
+        }}>
+
+            <Typography variant="h6" sx={{ fontFamily: "Jost", alignSelf: "flex-start", marginBottom: "10px" }}>Our Farmers</Typography>
             <div
                 style={{
-                    margin: "0 10px",
-                    // border: "1px solid black",
-                    display: "flex",
-                    padding: "10px",
-                    alignItems: "center"
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: "20px",
+                    width: "100%",
+                    justifyItems: "center"
                 }}
             >
-                <Typography variant="h6" sx={{ fontFamily: "Jost", alignSelf: "flex-start" }}>Farmers</Typography>
+                {farmers.slice(0, 9).map((farmer, index) => (
+                    <div
+                        key={index}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+                    >
+                        <Avatar
+                            alt="User Avatar"
+                            sx={{ cursor: "pointer", width: 56, height: 56 }}
+                            src={farmer.profilePhoto}
+                        >
+                            {(!farmer.profilePhoto && farmer.username) ? farmer.username.charAt(0).toUpperCase() : ""}
+                        </Avatar>
+                        <Typography
+                            align="center"  
+                            sx={{
+                                fontFamily: "Jost",
+                                maxWidth: "80px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {farmer.username}
+                        </Typography>
+                    </div>
+                ))}
             </div>
-            {farmers.map((farmer) => (
-                <div>
-                    <Avatar
-                        alt="User Avatar"
-                        sx={{ cursor: "pointer" }}
-                        src={farmer.profilePhoto ? farmer.profilePhoto : farmer.username.charAt(0)}
-                    />
-                    <Typography align="center" sx={{ fontFamily: "Jost" }}>{farmer.username}</Typography>
-                </div>
-            ))}
+
             <CustomButton>View All</CustomButton>
         </div>
     )

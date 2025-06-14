@@ -131,9 +131,9 @@ const Navbar = () => {
                                 alt="User Avatar"
                                 onClick={handleMenuOpen}
                                 sx={{ cursor: "pointer", fontFamily: "Jost", bgcolor: "#27ae60" }}
-                                src={profilePhoto ? profilePhoto : username.charAt(0)}
+                                src={profilePhoto}
                             >
-
+                                {(profilePhoto != "undefined" && profilePhoto != null) ? profilePhoto : username.charAt(0).toUpperCase()}
                             </Avatar>
                             <Menu
                                 anchorEl={anchorEl}

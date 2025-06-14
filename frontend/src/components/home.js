@@ -73,7 +73,7 @@ function Home() {
     };
 
     const columns = getColumns()
-    console.log(columns);
+    // console.log(columns);
     useEffect(() => {
         const fetchProducts = async () => {
             const result = await axios.get("http://localhost:5000/api/listProducts");
@@ -201,18 +201,23 @@ function Home() {
                             <FarmersList />
                         </Box>
                         <Box sx={{
+                            height: "50%", // Optional: lower half
                             display: "flex",
+                            margin: "5px",
                             alignItems: "center",
-                            justifyContent: "center"
-                            // height: "40%"
+                            justifyContent: "center",
+                            // padding: "10px",
+                            border: "1px solid black",
+                            borderRadius: "5px",
+                            // overflow: "auto",
                         }}>
                             {/* <Map /> */}
                             <iframe
-                                width="450"
-                                height="450"
-                                style={{ border: "0" }}
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
                                 loading="lazy"
-                                allowfullscreen
+                                allowFullScreen
                                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCgXytgbiFKaAPMmUypVh43ueYUZAG0SO0&q=senior+assisted+care+near+me&zoom=9">
                             </iframe>
                         </Box>
@@ -265,7 +270,7 @@ function Home() {
                     </Dialog>
                     <Box sx={{ flexWrap: "wrap", display: "flex", gap: "16px", width: "75%" }}>
                         <Grid container spacing={2} sx={{ flexWrap: "wrap", margin: "0 auto" }}>
-                            {filteredProducts.map((product) => (
+                            {/*filteredProducts.length > 0 ?*/ filteredProducts.map((product) => (
                                 <Grid item
                                     // xs={12} sm={6} md={4} lg={3} xl={2} 
                                     xs={12 / columns} sm={12 / columns} md={12 / columns} lg={12 / columns}
