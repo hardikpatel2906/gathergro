@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { errorResponse } = require('./responseHelper');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -20,8 +21,9 @@ const userAuth = (req, res, next) => {
         req.user = decoded; // e.g., decoded could have userId, role, etc.
         next();
     } catch (err) {
-        return res.status(403).json({ message: 'Forbidden: Invalid or expired token' });
+        // return res.status(403).json({ message: 'Forbidden: Invalid or expired token' });
+        return res.status(403).json(errorResponse(403, 'Forbidden: Invalid or expired token. Please login again', err));
     }
 };
 
-module.exports = {userAuth};
+module.exports = { userAuth };

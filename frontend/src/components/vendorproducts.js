@@ -3,7 +3,7 @@ import { Button, Box, Popover, TableContainer, Table, TableHead, TableBody, Tabl
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import api from "../services/apiServices";
 
 
@@ -54,16 +54,41 @@ const VendorProducts = () => {
         setAnchorEl(null);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userid");
+        localStorage.removeItem("profilePhoto");
+        navigate("/");
+    };
+
     const openPopover = Boolean(anchorEl);
     const id = openPopover ? 'simple-popover' : undefined;
 
 
     const getUserProductData = async () => {
         // const result = await axios.get(`http://localhost:5000/api/listProductsByUser?userId=${userId}`);
-        const result = await api.get(`api/listProductsByUser?userId=${userId}`);
-        if (result.data.status) {
-            setUserProductList(result.data.response);
-        }
+        api.get(`api/listProductsByUser?userId=${userId}`)
+            .then((result) => { 
+                setUserProductList(result.data.response);
+             })
+            .catch((error) => {
+                if (error.response) {
+                    // console.log("----", error.response.data)
+                    let errorData = error.response.data
+                    if (errorData.statusCode === 403) {
+                        toast.error(errorData.message);
+                        // handleLogout();
+                    }
+                }
+            });
+        //     if (result.data.status) {
+        //         setUserProductList(result.data.response);
+        //     }
+        //     else {
+        //         console.log(result);
+        //     }
     }
 
     useEffect(() => {
