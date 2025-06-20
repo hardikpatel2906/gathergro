@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Typography, Button, Chip, Stack, Grid, TextField } from "@mui/material";
+import { Box, Typography, Button, Chip, Stack, Grid, IconButton, TextField } from "@mui/material";
 import axios from "axios";
-import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
+import { AddCircleOutline, RemoveCircleOutline, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../store/cart-slice";
 import { toast } from "react-toastify";
@@ -23,6 +23,8 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const [isExpanded, setIsExpanded] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
+
+    const scrollRef = useRef();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -59,6 +61,18 @@ const SingleProduct = () => {
             alert("Can't remove Qty")
         }
     }
+
+    const scroll = (direction) => {
+        const container = scrollRef.current;
+        const scrollAmount = 220; // Change as needed
+
+        if (direction === "left") {
+            container.scrollLeft -= scrollAmount;
+        } else {
+            container.scrollLeft += scrollAmount;
+        }
+    };
+
 
     return (
         <>
@@ -178,67 +192,104 @@ const SingleProduct = () => {
                     </Grid>
                 </Grid>
             </Box>
-            <Box sx={{ mt: 1, px: { xs: 2, md: 4 } }}>
-                <Typography variant="h5" sx={{ mb: 2, fontFamily: "Jost" }}>
-                    More from {product.vendorId?.username}
+            <Box sx={{ mt: 1, mx:10, px: { xs: 2, md: 10 } }}>
+                <Typography variant="h5" sx={{ mb: 2, fontFamily: "Jost", textAlign: "center" }}>
+                    More products from {product.vendorId?.username}
                 </Typography>
+                <Box sx={{ position: "relative" }}>
+                    {/* Arrows */}
+                    <IconButton
+                        onClick={() => scroll("left")}
+                        sx={{
+                            position: "absolute",
+                            top: "50%", // 👈 vertically centers relative to product cards
+                            left: -20,
+                            transform: "translateY(-50%)",
+                            backgroundColor: "#fff",
+                            boxShadow: 1,
+                            zIndex: 10,
+                            '&:hover': { backgroundColor: "#eee" },
+                            display: { xs: "none", sm: "flex" }
+                        }}
+                    >
+                        <ChevronLeft />
+                    </IconButton>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        overflowX: "auto",
-                        gap: 2,
-                        scrollSnapType: "x mandatory",
-                        pb: 1,
-                        px: 1,
-                        '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for cleaner look
-                    }}
-                >
-                    {relatedProducts.map((item, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                flex: "0 0 auto",
-                                minWidth: 180,
-                                maxWidth: 200,
-                                scrollSnapAlign: "start",
-                            }}
-                        >
+                    <IconButton
+                        onClick={() => scroll("right")}
+                        sx={{
+                            position: "absolute",
+                            top: "50%",
+                            right: -20,
+                            transform: "translateY(-50%)",
+                            backgroundColor: "#fff",
+                            boxShadow: 1,
+                            zIndex: 10,
+                            '&:hover': { backgroundColor: "#eee" },
+                            display: { xs: "none", sm: "flex" }
+                        }}
+                    >
+                        <ChevronRight />
+                    </IconButton>
+
+                    {/* Scrollable Product Row */}
+                    <Box
+                        ref={scrollRef}
+                        sx={{
+                            display: "flex",
+                            overflowX: "auto",
+                            gap: 2,
+                            scrollSnapType: "x mandatory",
+                            pb: 1,
+                            px: 1,
+                            '&::-webkit-scrollbar': { display: 'none' },
+                        }}
+                    >
+                        {relatedProducts.map((item, index) => (
                             <Box
-                                component="img"
-                                src={item.productImages}
-                                alt={item.productName}
+                                key={index}
                                 sx={{
-                                    width: "100%",
-                                    height: 140,
-                                    objectFit: "cover",
-                                    borderRadius: 2,
-                                }}
-                            />
-                            <Typography
-                                variant="subtitle2"
-                                sx={{
-                                    fontFamily: "Jost",
-                                    mt: 1,
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    textAlign: "center",
+                                    flex: "0 0 auto",
+                                    minWidth: 180,
+                                    maxWidth: 200,
+                                    scrollSnapAlign: "start",
                                 }}
                             >
-                                {item.productName}
-                            </Typography>
-                            <Typography
-                                variant="body2"
-                                sx={{ fontFamily: "Jost", color: "text.secondary", textAlign: "center" }}
-                            >
-                                ${item.price}
-                            </Typography>
-                        </Box>
-                    ))}
+                                <Box
+                                    component="img"
+                                    src={item.productImages}
+                                    alt={item.productName}
+                                    sx={{
+                                        width: "100%",
+                                        height: 140,
+                                        objectFit: "cover",
+                                        borderRadius: 2,
+                                    }}
+                                />
+                                <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        fontFamily: "Jost",
+                                        mt: 1,
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {item.productName}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{ fontFamily: "Jost", color: "text.secondary", textAlign: "center" }}
+                                >
+                                    ${item.price}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Box>
                 </Box>
             </Box>
-
         </>
     );
 }
